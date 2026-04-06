@@ -1,0 +1,17 @@
+Input Image / Input Tensor
+          ↓
+      ResNet-18 Model
+          ↓
+ Layer-wise Profiling
+ (MACs, Params, Mult-Adds,
+ Memory Traffic, AI)
+          ↓
+ Bottleneck Identification
+ (Compute-heavy layers,
+ Memory-heavy layers)
+          ↓
+ Hardware-Aware Optimization
+ (Data reuse, buffering,
+ efficient mapping, accelerator guidance)
+          ↓
+ Design Insights / Efficient Acceleration
