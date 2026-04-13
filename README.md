@@ -5,10 +5,10 @@ ECE 510 Spring 2026
 
 ---
 
-## Tentative Project Topic: Hardware-Aware Optimization of CNN Workloads for Efficient Acceleration
+## Project Title: INT8 Conv2D Hardware Accelerator for CNN Inference
 
-This project focuses on analyzing and optimizing convolutional neural network (CNN) workloads, specifically using models such as ResNet-18, to enable efficient hardware acceleration. The work involves profiling computational characteristics such as MAC operations, memory traffic, and arithmetic intensity to identify performance bottlenecks.
+This project focuses on designing and analyzing a hardware accelerator for a single-layer INT8 3x3 Conv2D used in CNN inference. The work starts from a software reference model and uses profiling, arithmetic intensity calculation, and roofline analysis to identify the convolution kernel as the dominant computational bottleneck.
 
-The goal is to design a hardware-aware optimization strategy that improves execution efficiency by reducing memory bandwidth requirements and enhancing data reuse. The proposed approach bridges the gap between deep learning workloads and VLSI-based accelerator design, providing insights into compute-bound and memory-bound behavior of CNN layers.
+The goal is to improve execution efficiency by offloading the multiply-accumulate intensive Conv2D operation to dedicated hardware, while software continues to handle control, configuration, and output verification. The project studies performance tradeoffs involving computation, memory traffic, and interface bandwidth in order to make informed hardware/software co-design decisions.
 
-The project aims to contribute toward efficient accelerator architectures by guiding design decisions for RTL implementation, dataflow optimization, and hardware-software co-design.
+The proposed accelerator is organized as a realistic chiplet-style design with a standard interface, on-chip memory, and a dedicated INT8 Conv2D compute engine. Overall, the project bridges AI workload analysis with practical VLSI concerns such as throughput, dataflow, interface selection, RTL implementation, and design verification.
