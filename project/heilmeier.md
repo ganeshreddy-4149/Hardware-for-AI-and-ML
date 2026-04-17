@@ -1,0 +1,10 @@
+# Heilmeier Questions (Q1–Q3)
+
+## Q1. What are you trying to do?
+I am designing and verifying a small hardware accelerator for a single-layer INT8 3x3 Conv2D used in CNN inference. The target kernel is the convolution operation itself, implemented as a fixed, inference-only compute block rather than a full multi-layer CNN. The goal is to accelerate the multiply-accumulate-heavy Conv2D kernel relative to a software baseline, while keeping the project scope small enough to remain realistic for synthesis, verification, and interface integration in this course.
+
+## Q2. What is done today, and what are the limits?
+Today, the target kernel runs as a software reference implementation in Python using nested loops. Profiling shows that `conv2d_int8_reference` is the dominant kernel, accounting for about 88.09% of the profiled runtime. In the current software baseline, the median execution time is 0.129214 s for one input sample, corresponding to about 7.7391 samples/sec and 0.003009 GFLOP/s. These results show that the current approach is functionally correct but inefficient. The main limitation is that the baseline is a pure Python reference model, so performance is dominated by interpreter and loop overhead rather than by efficient execution of the Conv2D kernel itself.
+
+## Q3. What is your approach, and why is it better?
+My approach is to move the single-layer INT8 3x3 Conv2D kernel into a dedicated hardware accelerator while keeping host-side setup, control, and result checking in software. The arithmetic intensity of the kernel is 12.1046 FLOP/byte, and on the chosen CPU roofline this is above the ridge point of about 4.47 FLOP/byte. This makes Conv2D a meaningful hardware target because it has enough compute density to benefit from specialized execution. The hypothetical accelerator design point targets much higher throughput than the current software reference while remaining within the assumed interface bandwidth budget. This is better than the current software-only approach because it directly accelerates the dominant kernel instead of spending most of the runtime inside a slow Python loop structure.
