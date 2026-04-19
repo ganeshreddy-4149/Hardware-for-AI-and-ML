@@ -1,1 +1,45 @@
+==================================================
+  Neural Network Forward Pass - GPU
+==================================================
 
+[1] CUDA GPU detected!
+    Device name : Tesla T4
+    Device index: 0
+    Using device: cuda
+
+[2] Network architecture:
+    Sequential(
+  (0): Linear(in_features=4, out_features=5, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=5, out_features=1, bias=True)
+)
+    Model device: cuda:0
+
+[3] Input tensor:
+    Shape  : [16, 4]
+    Device : cuda:0
+    Dtype  : torch.float32
+
+[4] Forward pass complete!
+    Output shape  : [16, 1]
+    Output device : cuda:0
+    Output dtype  : torch.float32
+
+[5] Output tensor (first 5 values):
+    batch[0] = 0.117136
+    batch[1] = -0.176350
+    batch[2] = -0.348665
+    batch[3] = -0.392578
+    batch[4] = -0.257233
+
+==================================================
+  SUMMARY
+==================================================
+  GPU            : Tesla T4
+  Network        : Linear(4->5) -> ReLU -> Linear(5->1)
+  Batch size     : 16
+  Input shape    : [16, 4]
+  Output shape   : [16, 1]
+  Output device  : cuda:0
+  GPU confirmed  : True
+==================================================
