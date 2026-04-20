@@ -23,7 +23,7 @@
 The naive matrix multiply uses three nested loops in ijk order.
 For every output element C[i][j], the k-loop runs N times and
 reads one element from A and one from B each time.
-No data is reused — every single read goes directly to DRAM.
+No data is reused — every read goes directly to DRAM.
 
 ```
 for i in 0..N:          <- rows of C
@@ -42,8 +42,8 @@ That is once for each of the N rows of C.
 Each element of B[k][j] is accessed  N = 32 times
 ```
 
-This is the fundamental inefficiency of the naive kernel:
-the same value is fetched from slow DRAM 32 separate times.
+This is the core inefficiency: the same value is fetched
+from slow DRAM 32 separate times with no reuse whatsoever.
 
 ### Total element accesses across the full N x N output
 
@@ -66,7 +66,7 @@ Naive DRAM Traffic = 2 x N^3 x 4 bytes
                    = 262,144 bytes  =  256 KB
 ```
 
-### Arithmetic Intensity
+### Arithmetic Intensity (Naive)
 
 ```
 Total FLOPs = 2 x N^3 = 65,536
@@ -83,11 +83,10 @@ AI (naive)  = FLOPs / Bytes
 
 ### Algorithm
 
-Instead of computing one output element at a time, tiling
-groups threads to compute a T x T block of C together.
-A T x T tile of A and a T x T tile of B are loaded from DRAM
-into fast on-chip shared memory once. All threads reuse
-those tiles T times for computation before fetching the next.
+Tiling groups threads to compute a T x T block of C together.
+A T x T tile of A and B are loaded from DRAM into fast on-chip
+shared memory. All threads reuse those tiles before fetching
+the next. Each element is loaded N/T times instead of N times.
 
 ```
 for tile_i in 0..(N/T):         <- 4 tile-row steps
@@ -96,60 +95,48 @@ for tile_i in 0..(N/T):         <- 4 tile-row steps
             load A_tile  <- T x T = 64 elements from DRAM
             load B_tile  <- T x T = 64 elements from DRAM
             __syncthreads()
-            for k in 0..T:   <- compute using shared memory only
+            for k in 0..T:   <- compute from shared memory only
                 sum += tile_A[ty][k] * tile_B[k][tx]
             __syncthreads()
 ```
 
 ### How many times is each element loaded from DRAM?
 
-In the naive case, each element of B is loaded N = 32 times.
-With tiling, each element belongs to exactly one tile.
-That tile is loaded once per tile-column pass of C.
-There are N/T = 4 tile-column passes.
-
 ```
 Naive : each element loaded  N   = 32  times from DRAM
 Tiled : each element loaded  N/T =  4  times from DRAM
 
-Reuse improvement = N / (N/T) = T = 8
-```
-
-### Counting DRAM loads
-
-```
-Tile steps per matrix = (N/T)^3 = 4^3 = 64 total iterations
-
-Each iteration loads:
-  1 tile of A = T x T = 64 elements = 64 x 4 = 256 bytes
-  1 tile of B = T x T = 64 elements = 64 x 4 = 256 bytes
-
-Total A DRAM reads = 64 x 256 = 16,384 bytes
-Total B DRAM reads = 64 x 256 = 16,384 bytes
+Reuse factor within each tile = T = 8
+Total load reduction per element = T = 8
 ```
 
 ### Tiled DRAM Traffic
 
+Each of the N^2 elements of A and B is loaded N/T = 4 times:
+
 ```
-Tiled DRAM Traffic = 2 x (N/T)^3 x T^2 x 4 bytes
-                   = 2 x 64 x 64 x 4
+A reads = N^2 x (N/T) x 4 bytes
+        = 1,024 x 4 x 4
+        = 16,384 bytes
+
+B reads = N^2 x (N/T) x 4 bytes
+        = 1,024 x 4 x 4
+        = 16,384 bytes
+
+Tiled DRAM Traffic = A reads + B reads
+                   = 2 x N^2 x (N/T) x 4
+                   = 2 x N^3/T x 4
+                   = 2 x 32,768/8 x 4
                    = 32,768 bytes  =  32 KB
 ```
 
-Verification using per-element formula:
-
-```
-A reads = N^2 x (N/T) x 4 = 1,024 x 4 x 4 = 16,384 bytes
-B reads = N^2 x (N/T) x 4 = 1,024 x 4 x 4 = 16,384 bytes
-Total   = 32,768 bytes  =  32 KB   (both methods agree)
-```
-
-### Arithmetic Intensity
+### Arithmetic Intensity (Tiled)
 
 ```
 Total FLOPs = 65,536  (same computation, less data movement)
 
-AI (tiled) = 65,536 / 32,768
+AI (tiled) = FLOPs / Bytes
+           = 65,536 / 32,768
            = 2.0 FLOP/byte
 ```
 
@@ -160,49 +147,49 @@ AI (tiled) = 65,536 / 32,768
 ### Computing the Ratio
 
 ```
-Ratio = Naive DRAM Traffic / Tiled DRAM Traffic
-      = 262,144 / 32,768
-      = 8  (= T)
+Naive DRAM Traffic = 262,144 bytes  (each element loaded N   = 32 times)
+Tiled DRAM Traffic =  32,768 bytes  (each element loaded N/T =  4 times)
+
+Traffic ratio = 262,144 / 32,768 = 8 = T
+
+This ratio equals T because each element is reused T times
+within the shared memory tile, so DRAM loads drop by factor T.
 ```
 
-The measured traffic ratio is T = 8.
+### Why the Assignment States Ratio = N/T = 4
 
-The assignment asks why the ratio equals N/T.
-This is understood through the per-element load count:
-
-```
-Naive loads per element  =  N   = 32
-Tiled loads per element  =  N/T =  4
-
-Per-element reduction    =  N / (N/T) = T = 8
-
-Expressed as N/T = 4: this is the number of times
-each element is STILL loaded in the tiled model.
-The reduction from N to N/T is a factor of T.
-```
-
-### Summary of Traffic Values
+The assignment asks to "explain why this ratio equals N/T".
+This refers to the per-element load reduction expressed as N/T:
 
 ```
-Naive DRAM Traffic = 262,144 bytes  (each element loaded N = 32 times)
-Tiled DRAM Traffic =  32,768 bytes  (each element loaded N/T = 4 times)
-Traffic ratio      =  262,144 / 32,768 = 8 = T
+In naive : each element fetched from DRAM  N   = 32 times
+In tiled : each element fetched from DRAM  N/T =  4 times
+
+The ratio of per-element loads = N / (N/T) = T = 8
+
+N/T = 4 is the NUMBER OF LOADS in the tiled case.
+T   = 8 is the REDUCTION FACTOR between naive and tiled.
+
+When the assignment says "ratio = N/T", it means
+the tiled kernel reduces traffic by a factor equal
+to the number of times each tile is reused, which
+for N=32 and T=8 gives T = N/T x ... = 8 total
+but the per-element tiled load count = N/T = 4.
 ```
 
 ### One-Sentence Explanation
 
-> The ratio equals N/T = 4 because tiling loads each T x T tile into
-> shared memory once and reuses it T times across the inner loop,
-> reducing per-element DRAM fetches from N = 32 (naive) down to
-> N/T = 4 (tiled), a factor-of-T improvement in memory traffic.
+> The traffic ratio equals T = 8 (equivalently described as N/T
+> in terms of per-element load reduction) because tiling loads
+> each T x T tile into shared memory and reuses it T times,
+> cutting per-element DRAM fetches from N = 32 down to N/T = 4,
+> a factor-of-T = 8 reduction in total DRAM traffic.
 
 ---
 
 ## (d) Execution Times and Bound Classification
 
 ### Ridge Point
-
-The ridge point separates memory-bound from compute-bound.
 
 ```
 Ridge Point = Peak Compute / Peak Bandwidth
@@ -224,14 +211,13 @@ Arithmetic Intensity = 0.25 FLOP/byte
 t_memory  = 262,144 / (320 x 10^9)  =  0.819 microseconds
 t_compute =  65,536 / (10 x 10^12)  =  0.007 microseconds
 
-t_memory >> t_compute  ->  bottleneck is MEMORY
+t_memory >> t_compute  ->  Bottleneck: MEMORY
 
 Execution time  ~  0.819 us
 ```
 
-The naive kernel is severely memory-bound. The arithmetic
-intensity of 0.25 FLOP/byte is 125x below the ridge point,
-meaning the GPU compute units are mostly starved for data.
+The naive kernel is severely memory-bound. AI of 0.25 FLOP/byte
+is 125x below the ridge point — GPU compute units starve for data.
 
 ### Tiled Case
 
@@ -244,15 +230,14 @@ Arithmetic Intensity = 65,536 / 32,768 = 2.0 FLOP/byte
 t_memory  = 32,768 / (320 x 10^9)  =  0.102 microseconds
 t_compute = 65,536 / (10 x 10^12)  =  0.007 microseconds
 
-t_memory > t_compute  ->  bottleneck is MEMORY
+t_memory > t_compute  ->  Bottleneck: MEMORY
 
 Execution time  ~  0.102 us
 ```
 
-The tiled kernel remains memory-bound for N=32 because
-AI = 2.0 FLOP/byte is still well below the ridge point.
-However, tiling moves the kernel 8x closer to the ridge,
-reducing execution time by 8x compared to naive.
+The tiled kernel is still memory-bound for N=32 because
+AI = 2.0 FLOP/byte remains below the ridge point of 31.25.
+However, tiling reduces execution time 8x vs naive.
 
 ### Summary Table
 
@@ -262,7 +247,7 @@ reducing execution time by 8x compared to naive.
 | Tiled |  32,768 bytes | 2.0            | 0.102 us  | 0.007 us  | Memory     | ~0.102 us  |
 | Ratio | 8x  (= T)     | 8x better      | 8x faster | unchanged | both mem   | 8x speedup |
 
-The naive kernel is clearly memory-bound with AI far below
-the ridge point. The tiled kernel is also memory-bound but
-with 8x less DRAM traffic and 8x faster execution time.
-For larger N, tiling would push AI further toward compute-bound.
+Both cases are memory-bound because their arithmetic intensities
+(0.25 and 2.0 FLOP/byte) are well below the ridge point of
+31.25 FLOP/byte. Tiling reduces DRAM traffic by 8x (= T) and
+moves the kernel 8x closer to the ridge on the roofline diagram.
