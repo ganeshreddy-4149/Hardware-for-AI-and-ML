@@ -1,166 +1,119 @@
-# Codefest 5 — CMAN: 2x2 Weight-Stationary Systolic Array Trace
-ECE 410/510 | Hardware for AI and ML | Spring 2026
+# CMAN -- Systolic array trace (weight-stationary)
+
+**Given:**
+- A = [[1, 2], [3, 4]]
+- B = [[5, 6], [7, 8]]
+- Expected C = A × B = [[19, 22], [43, 50]]
 
 ---
 
-## Given Matrices
+## Task 1: PE diagram with preloaded weights
+
+Weight-stationary dataflow: B weights are preloaded and stay fixed in
+each PE for the entire computation. Columns of A stream in on the input
+wires (one column element per cycle). Partial sums flow downward through
+PE rows. The 1-cycle stagger on the bottom input wire ensures the correct
+partial sum meets the correct A value at PE[1][j].
 
 ```
-A = [ 1,  2 ]        B = [ 5,  6 ]
-    [ 3,  4 ]            [ 7,  8 ]
+  Col 0 of A         Col 1 of A
+  streams down       streams down (staggered 1 cycle)
+  A[0][0], A[1][0]   A[0][1], A[1][1]
+       |                   |
+       v                   v
+  +----------+       +----------+
+  | PE[0][0] |------>| PE[0][1] |   Row 0
+  | weight=5 |       | weight=6 |
+  +----------+       +----------+
+       | psum down         | psum down
+  +----------+       +----------+
+  | PE[1][0] |------>| PE[1][1] |   Row 1
+  | weight=7 |       | weight=8 |
+  +----------+       +----------+
+       | out               | out
+    C[*][0]             C[*][1]
+
+Preloaded weights:
+  PE[0][0] = B[0][0] = 5
+  PE[0][1] = B[0][1] = 6
+  PE[1][0] = B[1][0] = 7
+  PE[1][1] = B[1][1] = 8
 ```
-
-Expected output:
-
-```
-C = A x B = [ 19,  22 ]
-            [ 43,  50 ]
-```
-
-Verification:
-
-    C[0][0] = (1x5) + (2x7) = 5  + 14 = 19
-    C[0][1] = (1x6) + (2x8) = 6  + 16 = 22
-    C[1][0] = (3x5) + (4x7) = 15 + 28 = 43
-    C[1][1] = (3x6) + (4x8) = 18 + 32 = 50
 
 ---
 
-## Task 1 — 2x2 PE Diagram with Preloaded Weights
+## Task 2: Cycle-by-cycle trace table
 
-In a weight-stationary systolic array the weights are loaded into each
-Processing Element (PE) once at the start and never change. Each PE stores
-one element of B. The input rows of A flow into the grid cycle by cycle.
-Each PE multiplies the incoming input by its stored weight and adds the
-result into a running accumulator.
+Key insight: the TOP input wire streams column 0 of A (A[0][0]=1 then
+A[1][0]=3). The BOTTOM input wire streams column 1 of A (A[0][1]=2 then
+A[1][1]=4), staggered by 1 cycle. This stagger ensures that partial sums
+from row 0 PEs arrive at row 1 PEs exactly when the matching A values
+arrive, preventing incorrect mixing of row 0 and row 1 contributions.
 
-Weight assignment rule: PE[k][j] stores B[k][j]
+Total cycles = 3N - 2 = 3x2 - 2 = 4 cycles for N=2.
 
-```
-                   Col 0                  Col 1
-             +----------------+      +----------------+
-  k=0 row    |   PE[0][0]     |      |   PE[0][1]     |
-             |   weight = 5   |      |   weight = 6   |
-             |   B[0][0] = 5  |      |   B[0][1] = 6  |
-             +----------------+      +----------------+
+| Cycle | Top wire (col 0 of A) | Bottom wire (col 1 of A) | PE[0][0] psum | PE[0][1] psum | PE[1][0] psum | PE[1][1] psum | C output |
+|-------|-----------------------|--------------------------|---------------|---------------|---------------|---------------|----------|
+| 1     | A[0][0] = 1           | --                       | 0+1x5 = 5     | 0+1x6 = 6     | 0             | 0             | --       |
+| 2     | A[1][0] = 3           | A[0][1] = 2              | 0+3x5 = 15    | 0+3x6 = 18    | 5+2x7 = 19    | 6+2x8 = 22    | C[0][0]=19, C[0][1]=22 |
+| 3     | --                    | A[1][1] = 4              | 0             | 0             | 15+4x7 = 43   | 18+4x8 = 50   | C[1][0]=43, C[1][1]=50 |
+| 4     | --                    | --                       | drain         | drain         | drain         | drain         | all outputs valid |
 
-             +----------------+      +----------------+
-  k=1 row    |   PE[1][0]     |      |   PE[1][1]     |
-             |   weight = 7   |      |   weight = 8   |
-             |   B[1][0] = 7  |      |   B[1][1] = 8  |
-             +----------------+      +----------------+
-```
+**Verification of final C values:**
 
-Preloaded weights (fixed for entire computation):
+    C[0][0] = A[0][0]xB[0][0] + A[0][1]xB[1][0] = 1x5 + 2x7 =  5 + 14 = 19  correct
+    C[0][1] = A[0][0]xB[0][1] + A[0][1]xB[1][1] = 1x6 + 2x8 =  6 + 16 = 22  correct
+    C[1][0] = A[1][0]xB[0][0] + A[1][1]xB[1][0] = 3x5 + 4x7 = 15 + 28 = 43  correct
+    C[1][1] = A[1][0]xB[0][1] + A[1][1]xB[1][1] = 3x6 + 4x8 = 18 + 32 = 50  correct
 
-    PE[0][0] = B[0][0] = 5
-    PE[0][1] = B[0][1] = 6
-    PE[1][0] = B[1][0] = 7
-    PE[1][1] = B[1][1] = 8
-
-Data flow during computation:
-
-    Cycle 1: A column k=0 is broadcast. A[0][0]=1 and A[1][0]=3 flow in.
-             PE[0][0] and PE[0][1] receive inputs from row i=0 and i=1 of A, for k=0.
-             PE[1][0] and PE[1][1] receive inputs from row i=0 and i=1 of A, for k=1.
-
-Each PE accumulates: acc += input x stored_weight
-No weight ever moves or gets reloaded during the computation.
+**Why the stagger works:** Without the 1-cycle stagger, A[0][0]=1 and
+A[0][1]=2 would arrive at PE[1][0] simultaneously with partial sum 5,
+mixing row 0 and row 1 contributions incorrectly. The stagger ensures
+that when partial sum 5 (from 1x5) arrives at PE[1][0] in cycle 2, it
+meets A[0][1]=2 -- the correct column 1 value for computing C[0][0].
 
 ---
 
-## Task 2 — Cycle-by-Cycle Execution Table
+## Task 3: Counts
 
-How the inputs are routed: C[i][j] = sum over k of A[i][k] x B[k][j].
-PE[k][j] holds weight B[k][j]. In cycle 1 it receives A[i][0] for all rows i.
-In cycle 2 it receives A[i][1] for all rows i. The partial products for
-the same output C[i][j] come from PE[0][j] in cycle 1 and PE[1][j] in cycle 2,
-then get summed together at the end.
+### (a) Total MAC operations
 
-| Cycle | PE[0][0] w=5              | PE[0][1] w=6              | PE[1][0] w=7              | PE[1][1] w=8              |
-|-------|---------------------------|---------------------------|---------------------------|---------------------------|
-| 1     | A[0][0]x5 = 1x5 = **5**   | A[0][0]x6 = 1x6 = **6**   | A[0][1]x7 = 2x7 = **14**  | A[0][1]x8 = 2x8 = **16**  |
-|       | A[1][0]x5 = 3x5 = **15**  | A[1][0]x6 = 3x6 = **18**  | A[1][1]x7 = 4x7 = **28**  | A[1][1]x8 = 4x8 = **32**  |
-| 2     | C[0][0] = 5+14 = **19** ✓  | C[0][1] = 6+16 = **22** ✓  | C[1][0] = 15+28 = **43** ✓ | C[1][1] = 18+32 = **50** ✓ |
-| 3     | output written             | output written             | output written             | output written             |
-| 4     | idle                       | idle                       | idle                       | idle                       |
+Counted directly from the trace:
+- Cycle 1: PE[0][0] and PE[0][1] each do 1 MAC = 2 MACs
+- Cycle 2: all 4 PEs each do 1 MAC = 4 MACs
+- Cycle 3: PE[1][0] and PE[1][1] each do 1 MAC = 2 MACs
 
-Partial sum breakdown for each output element:
+    Total MACs = 2 + 4 + 2 = 8 = N^3 = 2^3
 
-    C[0][0]: PE[0][0] gives 1x5=5, PE[1][0] gives 2x7=14, total = 5+14 = 19
-    C[0][1]: PE[0][1] gives 1x6=6, PE[1][1] gives 2x8=16, total = 6+16 = 22
-    C[1][0]: PE[0][0] gives 3x5=15, PE[1][0] gives 4x7=28, total = 15+28 = 43
-    C[1][1]: PE[0][1] gives 3x6=18, PE[1][1] gives 4x8=32, total = 18+32 = 50
+### (b) Input reuse
 
-All four outputs match the expected result.
+**A values:** Each column of A streams through both PE rows.
+A[0][0]=1 is multiplied at PE[0][0] and its partial sum feeds PE[1][0].
+Each A value touches N=2 PEs.
 
----
+**B values:** Each weight stays fixed and is multiplied by N=2 different
+A values across the computation.
+B[0][0]=5 multiplies A[0][0]=1 in cycle 1 and A[1][0]=3 in cycle 2.
 
-## Task 3 — Counts
+    Each A value reused: N = 2 times
+    Each B value reused: N = 2 times
 
-**Total MACs**
+### (c) Off-chip memory accesses
 
-Each output element C[i][j] requires 2 multiply-accumulate operations,
-one for k=0 and one for k=1. There are 4 output elements total.
+    A reads:  4 elements x 1 load each = 4 accesses
+    B reads:  4 elements x 1 pre-load  = 4 accesses (loaded once before compute)
+    C writes: 4 elements x 1 store     = 4 accesses
+    Total:    12 off-chip memory accesses
 
-    Total MACs = 4 output elements x 2 MACs each = 8 MACs
-
-**Input Reuse Count**
-
-Each element of A is used in two different PEs. For example, A[0][0]=1
-feeds both PE[0][0] (to compute part of C[0][0]) and PE[0][1] (to compute
-part of C[0][1]) in the same cycle. This happens for every element of A.
-
-    Input reuse factor = 2
-    (each of the 4 elements of A is used in 2 PEs, once per output column)
-
-**Off-chip Memory Accesses**
-
-Matrix A — each element is read from off-chip memory exactly once and
-broadcast across all PE columns in that cycle.
-
-    A off-chip reads  = 4 reads  (2x2 elements, each read once)
-
-Matrix B — all weights are preloaded into PEs once at startup before
-computation begins. No weight is ever fetched from off-chip again during
-the computation. This is the defining property of weight-stationary dataflow.
-
-    B off-chip reads  = 4 reads  (2x2 weights, each loaded once)
-
-Matrix C — each output element is written back to off-chip memory once
-after the final accumulation is complete.
-
-    C off-chip writes = 4 writes (2x2 results, each written once)
-
-    Total off-chip accesses = 4 + 4 + 4 = 12
+No A or B value is fetched from off-chip memory more than once. B values
+are pre-loaded before computation begins and remain stationary throughout.
+This is the key advantage of weight-stationary dataflow -- weight memory
+bandwidth is minimized.
 
 ---
 
-## Task 4 — Output-Stationary (One Sentence)
+## Task 4: Output-stationary answer
 
-In an output-stationary systolic array, each PE is assigned one fixed output
-element and holds its accumulator stationary throughout the entire computation
-while both input activations and weights flow through the array, so no partial
-sum ever needs to move until the final accumulated result is ready to be
-written out.
-
----
-
-## Summary
-
-| Item                    | Value                              |
-|-------------------------|------------------------------------|
-| Array size              | 2x2 PEs                            |
-| Dataflow style          | Weight-stationary                  |
-| Total MACs              | 8                                  |
-| Active compute cycles   | 2                                  |
-| Output write cycle      | 1                                  |
-| Input reuse factor      | 2x (each A element used in 2 PEs)  |
-| A off-chip reads        | 4                                  |
-| B off-chip reads        | 4 (loaded once at startup)         |
-| C off-chip writes       | 4                                  |
-| Total off-chip accesses | 12                                 |
-| C[0][0]                 | 19 ✓                               |
-| C[0][1]                 | 22 ✓                               |
-| C[1][0]                 | 43 ✓                               |
-| C[1][1]                 | 50 ✓                               |
+In output-stationary dataflow, the accumulated partial sums (output
+values) stay fixed in each PE for the entire computation, while both
+weights and activations stream through the array.
