@@ -1,0 +1,7 @@
+VCD info: dumpfile interface.vcd opened for output.
+CHECK 1: write CTRL=1 core_start=1 --> PASS
+CHECK 2: read STATUS=0x00000002 busy=1 done=0 --> PASS
+CHECK 3: write SHIFT=5 core_shift=5 --> PASS
+CHECK 4: read SHIFT=5 --> PASS
+PASS
+tb_interface.sv:168: $finish called at 745000 (1ps)

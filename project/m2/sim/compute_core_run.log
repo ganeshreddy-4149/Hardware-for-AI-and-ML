@@ -1,0 +1,11 @@
+VCD info: dumpfile compute_core.vcd opened for output.
+=== Buffer verify ===
+act [0,1,2]   = 1 2 3
+act [32,33,34]= 4 5 6
+act [64,65,66]= 7 8 9
+wt  [0..8]    = 1 0 -1 1 0 -1 1 0 -1
+mac_sum at h=0,w=0,oc=0 = -6  (expected -6)
+=== Result ===
+CHECK: result_out[oc=0,h=0,w=0]=-6 expected=-6  --> PASS
+PASS
+tb_compute_core.sv:175: $finish called at 72565000 (1ps)
