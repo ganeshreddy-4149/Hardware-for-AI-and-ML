@@ -1,0 +1,27 @@
+==============================================================
+ ECE 410/510 Codefest 6 - crossbar_mac Testbench
+ Weights: [[1,-1,1,-1],[1,1,-1,-1],[-1,1,1,-1],[-1,-1,-1,1]]
+ Inputs : [10, 20, 30, 40]
+==============================================================
+
+[Phase 1] Applying reset...
+  Reset released.
+
+[Phase 2] Loading weights...
+  row0=[+1,-1,+1,-1] row1=[+1,+1,-1,-1]
+  row2=[-1,+1,+1,-1] row3=[-1,-1,-1,+1]
+
+[Phase 3] Applying inputs [10,20,30,40]...
+
+[Phase 4] Checking outputs...
+  Output | Expected | Got  | Status
+  ----------------------------------------
+  out[0] |  -40     |  -40 | PASS
+  out[1] |    0     |    0 | PASS
+  out[2] |  -20     |  -20 | PASS
+  out[3] |  -20     |  -20 | PASS
+  ----------------------------------------
+
+[Result] 4/4 PASSED  0/4 FAILED
+[SIMULATION PASSED] All outputs match hand-calculated values.
+==============================================================
