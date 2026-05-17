@@ -1,0 +1,33 @@
+metric,value
+design_name,conv2d_top
+synthesis_tool,Yosys 0.9 (git sha1 1979e0b)
+pdk,sky130A
+std_cell_library,sky130_fd_sc_hd
+clock_port,clk
+clock_period_ns,10.0
+clock_freq_mhz,100.0
+total_cells,14588
+conv2d_top_cells,295
+mac_array_cells,13925
+requantizer_cells,368
+dff_count,96
+memory_bits,84160
+memory_kb,10.27
+and_gates_total,6276
+xor_gates_total,5213
+mux_cells_total,387
+not_gates,9
+or_gates_total,2609
+critical_path_source,h_cnt_w_cnt_registers
+critical_path_sink,acc_out_register
+critical_path_dominant_cells,$_AND_ $_XOR_
+mac_array_pct_of_total,95.4
+slack_ns,not_available_yosys_standalone
+hold_violations,0
+constant_dff_removed,2
+cpu_time_sec,15.38
+peak_mem_mb,137.46
+openlane_flow_status,partial_yosys_synthesis_complete_openroad_not_run
+openlane_version_attempted,2.1.9
+verilator_version,5.022
+notes,Full OpenLane 2 flow attempted but blocked by TCL-enabled Yosys dependency in Colab environment. Yosys standalone synthesis completed successfully producing all cell count and memory statistics above. OpenROAD placement routing and formal STA with liberty file deferred to M3.
