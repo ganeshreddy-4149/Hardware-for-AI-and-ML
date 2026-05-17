@@ -11,13 +11,13 @@ Let **N = 512** and **s** = fraction of zeros (sparsity). The number of nonzero 
 
 Each output element requires N multiply-accumulate operations (one multiply + one add = 2 FLOPs). The matrix has N² elements, each contributing exactly one MAC.
 
-$$\text{Dense FLOPs} = 2N^2 = 2 \times 512^2 = \boxed{524{,}288 \text{ FLOPs}}$$
+$$\text{Dense FLOPs} = 2N^2 = 2 \times 512^2 = \mathbf{524{,}288 \text{ FLOPs}}$$
 
 ### (b) Dense Memory Bytes
 
 Every weight is stored as FP32 (4 bytes). No index overhead.
 
-$$\text{Dense Bytes} = 4N^2 = 4 \times 512^2 = \boxed{1{,}048{,}576 \text{ bytes}} \approx 1 \text{ MB}$$
+$$\text{Dense Bytes} = 4N^2 = 4 \times 512^2 = \mathbf{1{,}048{,}576 \text{ bytes}} \approx 1 \text{ MB}$$
 
 ### (c) Sparse Compute (as a function of s)
 
@@ -45,7 +45,7 @@ Substituting N = 512:
 
 $$\text{Sparse Bytes}(s) = 8 \times 262{,}144 \times (1-s) + 4 \times 513$$
 
-$$= \boxed{2{,}097{,}152(1-s) + 2{,}052 \text{ bytes}}$$
+$$= \mathbf{2{,}097{,}152(1-s) + 2{,}052 \text{ bytes}}$$
 
 ---
 
@@ -59,7 +59,7 @@ This is independent of N — sparsity alone drives the FLOPs benefit.
 
 **Finding s for 2× speedup:**
 
-$$\frac{1}{1-s} = 2 \implies 1 - s = \frac{1}{2} \implies \boxed{s = 0.5}$$
+$$\frac{1}{1-s} = 2 \implies 1 - s = \frac{1}{2} \implies \mathbf{s = 0.5}$$
 
 At **50% sparsity**, the sparse format cuts the number of MACs exactly in half. Below this threshold the overhead of managing the CSR structure isn't yet worth the compute reduction; above it, each additional percent of sparsity continues to give proportional FLOPs relief.
 
@@ -89,7 +89,7 @@ $$s^* = \frac{4N^2 + 4N + 4}{8N^2} = \frac{N^2 + N + 1}{2N^2}$$
 
 $$s^* = \frac{512^2 + 512 + 1}{2 \times 512^2} = \frac{262{,}144 + 512 + 1}{524{,}288} = \frac{262{,}657}{524{,}288}$$
 
-$$\boxed{s^* \approx 0.5010 \ (50.1\%)}$$
+$$\mathbf{s^* \approx 0.5010 \ (50.1\%)}$$
 
 ### Interpretation
 
@@ -122,7 +122,7 @@ $$t_{\text{sparse}} = \frac{211{,}767}{320 \times 10^9} \approx 0.6618 \ \mu\tex
 
 ### Speedup
 
-$$\text{Speedup} = \frac{t_{\text{dense}}}{t_{\text{sparse}}} = \frac{1{,}048{,}576}{211{,}767} \approx \boxed{4.95\times}$$
+$$\text{Speedup} = \frac{t_{\text{dense}}}{t_{\text{sparse}}} = \frac{1{,}048{,}576}{211{,}767} \approx \mathbf{4.95\times}$$
 
 ### Discussion
 
