@@ -125,7 +125,7 @@ A conventional readout samples all 1024 neurons every 1 ms, sending 1 bit per ne
 
 - B_AER (mean) = 1.024 Mbit/s
 - B_frame = 1.024 Mbit/s
-- Ratio = 1.024 / 1.024 = **1.0**
+- Ratio = B_AER / B_frame = 1.024 / 1.024 = **1:1**
 
 At f = 50 Hz, AER and frame-based bandwidths are exactly equal.
 
@@ -160,5 +160,5 @@ AER is the right choice when the mean firing rate is below 50 Hz, because at low
 | Burst-to-mean ratio | 5× |
 | Buffering required? | Yes — 128 packets deep |
 | Frame-based bandwidth | 1.024 Mbit/s |
-| AER/frame ratio at f=50 Hz | 1.0 |
+| AER/frame ratio at f=50 Hz | 1:1 |
 | Crossover firing rate | f_crossover = 50 Hz |
