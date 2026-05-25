@@ -1,0 +1,5 @@
+`verilator_config
+lint_off -rule DECLFILENAME
+lint_off -rule EOFNEWLINE
+lint_off -rule UNDRIVEN -file "/work/runs/m3_run/tmp/46cc06fa084546e3a9357fc162651374.bb.v"
+lint_off -rule UNUSEDSIGNAL -file "/work/runs/m3_run/tmp/46cc06fa084546e3a9357fc162651374.bb.v"
