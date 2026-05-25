@@ -1,0 +1,59 @@
+{
+   "creator": "Yosys 0.46 (git sha1 e97731b9dda91fa5fa53ed87df7c34163ba59a41, clang++ 17.0.6 -fPIC -O3)",
+   "invocation": "stat -json -liberty /work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib ",
+   "modules": {
+      "\\conv2d_top": {
+         "num_wires":         15685,
+         "num_wire_bits":     16326,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         16035,
+         "area":              8295.456000,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_MUX_": 1503,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953,
+            "sky130_fd_sc_hd__dfxtp_2": 390
+         }
+      }
+   },
+      "design": {
+         "num_wires":         15685,
+         "num_wire_bits":     16326,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         16035,
+         "area":              8295.456000,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_MUX_": 1503,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953,
+            "sky130_fd_sc_hd__dfxtp_2": 390
+         }
+      }
+}
+

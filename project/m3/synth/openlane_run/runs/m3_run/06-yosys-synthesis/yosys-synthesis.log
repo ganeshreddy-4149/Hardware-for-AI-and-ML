@@ -1,0 +1,2372 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2024  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.46 (git sha1 e97731b9dda91fa5fa53ed87df7c34163ba59a41, clang++ 17.0.6 -fPIC -O3)
+Loaded SDC plugin
+
+1. Executing Liberty frontend: /root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+Imported 428 cell types from liberty file.
+[INFO] Using SDC file '/work/runs/m3_run/06-yosys-synthesis/synthesis.abc.sdc' for ABC…
+
+2. Executing Verilog-2005 frontend: /work/rtl/top.sv
+Parsing SystemVerilog input from `/work/rtl/top.sv' to AST representation.
+Storing AST representation for module `$abstract\conv2d_top'.
+Storing AST representation for module `$abstract\mac_array'.
+Storing AST representation for module `$abstract\requantizer'.
+Successfully finished Verilog frontend.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+4. Executing AST frontend in derive mode using pre-parsed AST for module `\conv2d_top'.
+Generating RTLIL representation for module `\conv2d_top'.
+Warning: Replacing memory \bias_buf with list of registers. See /work/rtl/top.sv:172
+Warning: Replacing memory \out_buf with list of registers. See /work/rtl/top.sv:151
+
+4.1. Analyzing design hierarchy..
+Top module:  \conv2d_top
+
+4.2. Executing AST frontend in derive mode using pre-parsed AST for module `\requantizer'.
+Generating RTLIL representation for module `\requantizer'.
+
+4.3. Executing AST frontend in derive mode using pre-parsed AST for module `\mac_array'.
+Generating RTLIL representation for module `\mac_array'.
+
+4.4. Analyzing design hierarchy..
+Top module:  \conv2d_top
+Used module:     \requantizer
+Used module:     \mac_array
+
+4.5. Analyzing design hierarchy..
+Top module:  \conv2d_top
+Used module:     \requantizer
+Used module:     \mac_array
+Removing unused module `$abstract\requantizer'.
+Removing unused module `$abstract\mac_array'.
+Removing unused module `$abstract\conv2d_top'.
+Removed 3 unused modules.
+Renaming module conv2d_top to conv2d_top.
+
+5. Generating Graphviz representation of design.
+Writing dot description to `/work/runs/m3_run/06-yosys-synthesis/hierarchy.dot'.
+Dumping module conv2d_top to page 1.
+
+6. Executing TRIBUF pass.
+
+7. Executing HIERARCHY pass (managing design hierarchy).
+
+7.1. Analyzing design hierarchy..
+Top module:  \conv2d_top
+Used module:     \requantizer
+Used module:     \mac_array
+
+7.2. Analyzing design hierarchy..
+Top module:  \conv2d_top
+Used module:     \requantizer
+Used module:     \mac_array
+Removed 0 unused modules.
+
+8. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+9. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 9 switch rules as full_case in process $proc$/work/rtl/top.sv:155$32 in module conv2d_top.
+Marked 1 switch rules as full_case in process $proc$/work/rtl/top.sv:150$30 in module conv2d_top.
+Marked 2 switch rules as full_case in process $proc$/work/rtl/top.sv:141$24 in module conv2d_top.
+Marked 3 switch rules as full_case in process $proc$/work/rtl/top.sv:126$12 in module conv2d_top.
+Marked 4 switch rules as full_case in process $proc$/work/rtl/top.sv:114$10 in module conv2d_top.
+Marked 1 switch rules as full_case in process $proc$/work/rtl/top.sv:109$9 in module conv2d_top.
+Marked 3 switch rules as full_case in process $proc$/work/rtl/top.sv:269$141 in module requantizer.
+Marked 1 switch rules as full_case in process $proc$/work/rtl/top.sv:250$153 in module mac_array.
+Removed a total of 0 dead cases.
+
+10. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 5 redundant assignments.
+Promoted 7 assignments to connections.
+
+11. Executing PROC_INIT pass (extract init attributes).
+
+12. Executing PROC_ARST pass (detect async resets in processes).
+
+13. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~33 debug messages>
+
+14. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+     1/44: $6$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$82
+     2/44: $6$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$81
+     3/44: $6$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$80
+     4/44: $5$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$71
+     5/44: $5$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA[7:0]$70
+     6/44: $5$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$69
+     7/44: $5$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$74
+     8/44: $5$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$73
+     9/44: $5$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$72
+    10/44: $4$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$65
+    11/44: $4$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$64
+    12/44: $4$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$63
+    13/44: $4$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$62
+    14/44: $4$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA[7:0]$61
+    15/44: $4$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$60
+    16/44: $3$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$58
+    17/44: $3$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$57
+    18/44: $3$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$56
+    19/44: $3$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$55
+    20/44: $3$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA[7:0]$54
+    21/44: $3$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$53
+    22/44: $2$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$51
+    23/44: $2$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$50
+    24/44: $2$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$49
+    25/44: $2$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$48
+    26/44: $2$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA[7:0]$47
+    27/44: $2$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$46
+    28/44: $0\s_axil_arready[0:0]
+    29/44: $0\s_axil_wready[0:0]
+    30/44: $0\s_axil_awready[0:0]
+    31/44: $1$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$44
+    32/44: $1$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA[7:0]$43
+    33/44: $1$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$42
+    34/44: $1$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$41
+    35/44: $1$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA[7:0]$40
+    36/44: $1$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$39
+    37/44: $0\bias_buf[0][31:0]
+    38/44: $0\reg_scale_shift[31:0]
+    39/44: $0\reg_start[0:0]
+    40/44: $0\s_axil_rvalid[0:0]
+    41/44: $0\s_axil_rresp[1:0]
+    42/44: $0\s_axil_rdata[31:0]
+    43/44: $0\s_axil_bvalid[0:0]
+    44/44: $0\s_axil_bresp[1:0]
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:150$30'.
+     1/1: $0\out_buf[0][7:0]
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:141$24'.
+     1/2: $0\busy[0:0]
+     2/2: $0\done[0:0]
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+     1/4: $0\compute_valid[0:0]
+     2/4: $0\oc_cnt[2:0]
+     3/4: $0\w_cnt[4:0]
+     4/4: $0\h_cnt[4:0]
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:114$10'.
+     1/4: $4\next_state[2:0]
+     2/4: $3\next_state[2:0]
+     3/4: $2\next_state[2:0]
+     4/4: $1\next_state[2:0]
+Creating decoders for process `\conv2d_top.$proc$/work/rtl/top.sv:109$9'.
+     1/1: $0\state[2:0]
+Creating decoders for process `\requantizer.$proc$/work/rtl/top.sv:269$141'.
+     1/1: $0\out_data[7:0]
+Creating decoders for process `\mac_array.$proc$/work/rtl/top.sv:250$153'.
+     1/1: $0\acc_out[31:0]
+
+15. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\conv2d_top.\next_state' from process `\conv2d_top.$proc$/work/rtl/top.sv:114$10'.
+
+16. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\conv2d_top.\s_axil_awready' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$673' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_wready' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$674' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_bresp' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$675' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_bvalid' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$676' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_arready' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$677' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_rdata' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$678' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_rresp' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$679' with positive edge clock.
+Creating register for signal `\conv2d_top.\s_axil_rvalid' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$680' with positive edge clock.
+Creating register for signal `\conv2d_top.\reg_start' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$681' with positive edge clock.
+Creating register for signal `\conv2d_top.\reg_scale_shift' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$682' with positive edge clock.
+Creating register for signal `\conv2d_top.\bias_buf[0]' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$683' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$684' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\act_buf$/work/rtl/top.sv:169$1_DATA' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$685' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\act_buf$/work/rtl/top.sv:169$1_EN' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$686' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$687' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\weight_buf$/work/rtl/top.sv:171$2_DATA' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$688' with positive edge clock.
+Creating register for signal `\conv2d_top.$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN' using process `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+  created $dff cell `$procdff$689' with positive edge clock.
+Creating register for signal `\conv2d_top.\out_buf[0]' using process `\conv2d_top.$proc$/work/rtl/top.sv:150$30'.
+  created $dff cell `$procdff$690' with positive edge clock.
+Creating register for signal `\conv2d_top.\done' using process `\conv2d_top.$proc$/work/rtl/top.sv:141$24'.
+  created $dff cell `$procdff$691' with positive edge clock.
+Creating register for signal `\conv2d_top.\busy' using process `\conv2d_top.$proc$/work/rtl/top.sv:141$24'.
+  created $dff cell `$procdff$692' with positive edge clock.
+Creating register for signal `\conv2d_top.\h_cnt' using process `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+  created $dff cell `$procdff$693' with positive edge clock.
+Creating register for signal `\conv2d_top.\w_cnt' using process `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+  created $dff cell `$procdff$694' with positive edge clock.
+Creating register for signal `\conv2d_top.\oc_cnt' using process `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+  created $dff cell `$procdff$695' with positive edge clock.
+Creating register for signal `\conv2d_top.\compute_valid' using process `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+  created $dff cell `$procdff$696' with positive edge clock.
+Creating register for signal `\conv2d_top.\state' using process `\conv2d_top.$proc$/work/rtl/top.sv:109$9'.
+  created $dff cell `$procdff$697' with positive edge clock.
+Creating register for signal `\requantizer.\out_data' using process `\requantizer.$proc$/work/rtl/top.sv:269$141'.
+  created $dff cell `$procdff$698' with positive edge clock.
+Creating register for signal `\mac_array.\acc_out' using process `\mac_array.$proc$/work/rtl/top.sv:250$153'.
+  created $dff cell `$procdff$699' with positive edge clock.
+
+17. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+18. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 12 empty switches in `\conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:155$32'.
+Found and cleaned up 2 empty switches in `\conv2d_top.$proc$/work/rtl/top.sv:150$30'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:150$30'.
+Found and cleaned up 3 empty switches in `\conv2d_top.$proc$/work/rtl/top.sv:141$24'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:141$24'.
+Found and cleaned up 5 empty switches in `\conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:126$12'.
+Found and cleaned up 4 empty switches in `\conv2d_top.$proc$/work/rtl/top.sv:114$10'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:114$10'.
+Found and cleaned up 1 empty switch in `\conv2d_top.$proc$/work/rtl/top.sv:109$9'.
+Removing empty process `conv2d_top.$proc$/work/rtl/top.sv:109$9'.
+Found and cleaned up 4 empty switches in `\requantizer.$proc$/work/rtl/top.sv:269$141'.
+Removing empty process `requantizer.$proc$/work/rtl/top.sv:269$141'.
+Found and cleaned up 2 empty switches in `\mac_array.$proc$/work/rtl/top.sv:250$153'.
+Removing empty process `mac_array.$proc$/work/rtl/top.sv:250$153'.
+Cleaned up 33 empty switches.
+
+19. Executing CHECK pass (checking for obvious problems).
+Checking module conv2d_top...
+Checking module requantizer...
+Checking module mac_array...
+Found and reported 0 problems.
+
+20. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~13 debug messages>
+Optimizing module requantizer.
+Optimizing module mac_array.
+
+21. Executing FLATTEN pass (flatten design).
+Deleting now unused module requantizer.
+Deleting now unused module mac_array.
+<suppressed ~2 debug messages>
+
+22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+23. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 7 unused cells and 272 unused wires.
+<suppressed ~8 debug messages>
+
+24. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+25. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~93 debug messages>
+Removed a total of 31 cells.
+
+26. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$167.
+    dead port 1/2 on $mux $procmux$170.
+    dead port 1/2 on $mux $procmux$173.
+    dead port 2/2 on $mux $procmux$175.
+    dead port 1/2 on $mux $procmux$178.
+    dead port 1/2 on $mux $procmux$185.
+    dead port 1/2 on $mux $procmux$188.
+    dead port 1/2 on $mux $procmux$191.
+    dead port 2/2 on $mux $procmux$193.
+    dead port 1/2 on $mux $procmux$196.
+    dead port 1/2 on $mux $procmux$203.
+    dead port 1/2 on $mux $procmux$206.
+    dead port 1/2 on $mux $procmux$209.
+    dead port 2/2 on $mux $procmux$211.
+    dead port 1/2 on $mux $procmux$214.
+    dead port 1/2 on $mux $procmux$221.
+    dead port 1/2 on $mux $procmux$224.
+    dead port 2/2 on $mux $procmux$226.
+    dead port 1/2 on $mux $procmux$229.
+    dead port 1/2 on $mux $procmux$236.
+    dead port 1/2 on $mux $procmux$239.
+    dead port 2/2 on $mux $procmux$241.
+    dead port 1/2 on $mux $procmux$244.
+    dead port 1/2 on $mux $procmux$251.
+    dead port 1/2 on $mux $procmux$254.
+    dead port 2/2 on $mux $procmux$256.
+    dead port 1/2 on $mux $procmux$259.
+    dead port 1/2 on $mux $procmux$266.
+    dead port 1/2 on $mux $procmux$269.
+    dead port 2/2 on $mux $procmux$271.
+    dead port 1/2 on $mux $procmux$274.
+    dead port 1/2 on $mux $procmux$281.
+    dead port 1/2 on $mux $procmux$284.
+    dead port 2/2 on $mux $procmux$286.
+    dead port 1/2 on $mux $procmux$289.
+    dead port 1/2 on $mux $procmux$296.
+    dead port 1/2 on $mux $procmux$299.
+    dead port 2/2 on $mux $procmux$301.
+    dead port 1/2 on $mux $procmux$304.
+    dead port 1/2 on $mux $procmux$311.
+    dead port 2/2 on $mux $procmux$313.
+    dead port 1/2 on $mux $procmux$316.
+    dead port 1/2 on $mux $procmux$323.
+    dead port 2/2 on $mux $procmux$325.
+    dead port 1/2 on $mux $procmux$328.
+    dead port 1/2 on $mux $procmux$335.
+    dead port 2/2 on $mux $procmux$337.
+    dead port 1/2 on $mux $procmux$340.
+    dead port 1/2 on $mux $procmux$347.
+    dead port 2/2 on $mux $procmux$349.
+    dead port 1/2 on $mux $procmux$352.
+    dead port 1/2 on $mux $procmux$359.
+    dead port 2/2 on $mux $procmux$361.
+    dead port 1/2 on $mux $procmux$364.
+    dead port 1/2 on $mux $procmux$371.
+    dead port 2/2 on $mux $procmux$373.
+    dead port 1/2 on $mux $procmux$376.
+    dead port 2/2 on $mux $procmux$382.
+    dead port 1/2 on $mux $procmux$385.
+    dead port 2/2 on $mux $procmux$391.
+    dead port 1/2 on $mux $procmux$394.
+    dead port 2/2 on $mux $procmux$400.
+    dead port 1/2 on $mux $procmux$403.
+    dead port 2/2 on $mux $procmux$409.
+    dead port 1/2 on $mux $procmux$412.
+    dead port 2/2 on $mux $procmux$418.
+    dead port 1/2 on $mux $procmux$421.
+    dead port 2/2 on $mux $procmux$427.
+    dead port 1/2 on $mux $procmux$430.
+    dead port 1/2 on $mux $procmux$436.
+    dead port 1/2 on $mux $procmux$442.
+    dead port 1/2 on $mux $procmux$448.
+    dead port 1/2 on $mux $procmux$454.
+    dead port 1/2 on $mux $procmux$460.
+    dead port 1/2 on $mux $procmux$466.
+    dead port 2/2 on $mux $procmux$627.
+    dead port 2/2 on $mux $procmux$635.
+    dead port 2/2 on $mux $procmux$645.
+Removed 78 multiplexer ports.
+<suppressed ~28 debug messages>
+
+27. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$164:
+      Old ports: A=8'00000000, B=8'11111111, Y=$procmux$164_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$164_Y [0]
+      New connections: $procmux$164_Y [7:1] = { $procmux$164_Y [0] $procmux$164_Y [0] $procmux$164_Y [0] $procmux$164_Y [0] $procmux$164_Y [0] $procmux$164_Y [0] $procmux$164_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$218:
+      Old ports: A=8'00000000, B=8'11111111, Y=$procmux$218_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$218_Y [0]
+      New connections: $procmux$218_Y [7:1] = { $procmux$218_Y [0] $procmux$218_Y [0] $procmux$218_Y [0] $procmux$218_Y [0] $procmux$218_Y [0] $procmux$218_Y [0] $procmux$218_Y [0] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$263:
+      Old ports: A=$6$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$82, B=8'00000000, Y=$procmux$263_Y
+      New ports: A=$procmux$164_Y [0], B=1'0, Y=$procmux$263_Y [0]
+      New connections: $procmux$263_Y [7:1] = { $procmux$263_Y [0] $procmux$263_Y [0] $procmux$263_Y [0] $procmux$263_Y [0] $procmux$263_Y [0] $procmux$263_Y [0] $procmux$263_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$344:
+      Old ports: A=$5$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$71, B=8'00000000, Y=$procmux$344_Y
+      New ports: A=$procmux$218_Y [0], B=1'0, Y=$procmux$344_Y [0]
+      New connections: $procmux$344_Y [7:1] = { $procmux$344_Y [0] $procmux$344_Y [0] $procmux$344_Y [0] $procmux$344_Y [0] $procmux$344_Y [0] $procmux$344_Y [0] $procmux$344_Y [0] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$308:
+      Old ports: A=$5$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$74, B=8'00000000, Y=$procmux$308_Y
+      New ports: A=$procmux$263_Y [0], B=1'0, Y=$procmux$308_Y [0]
+      New connections: $procmux$308_Y [7:1] = { $procmux$308_Y [0] $procmux$308_Y [0] $procmux$308_Y [0] $procmux$308_Y [0] $procmux$308_Y [0] $procmux$308_Y [0] $procmux$308_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$407:
+      Old ports: A=$4$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$62, B=8'00000000, Y=$procmux$407_Y
+      New ports: A=$procmux$344_Y [0], B=1'0, Y=$procmux$407_Y [0]
+      New connections: $procmux$407_Y [7:1] = { $procmux$407_Y [0] $procmux$407_Y [0] $procmux$407_Y [0] $procmux$407_Y [0] $procmux$407_Y [0] $procmux$407_Y [0] $procmux$407_Y [0] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$380:
+      Old ports: A=$4$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$65, B=8'00000000, Y=$procmux$380_Y
+      New ports: A=$procmux$308_Y [0], B=1'0, Y=$procmux$380_Y [0]
+      New connections: $procmux$380_Y [7:1] = { $procmux$380_Y [0] $procmux$380_Y [0] $procmux$380_Y [0] $procmux$380_Y [0] $procmux$380_Y [0] $procmux$380_Y [0] $procmux$380_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$451:
+      Old ports: A=8'00000000, B=$3$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$55, Y=$procmux$451_Y
+      New ports: A=1'0, B=$procmux$407_Y [0], Y=$procmux$451_Y [0]
+      New connections: $procmux$451_Y [7:1] = { $procmux$451_Y [0] $procmux$451_Y [0] $procmux$451_Y [0] $procmux$451_Y [0] $procmux$451_Y [0] $procmux$451_Y [0] $procmux$451_Y [0] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$433:
+      Old ports: A=8'00000000, B=$3$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$58, Y=$procmux$433_Y
+      New ports: A=1'0, B=$procmux$380_Y [0], Y=$procmux$433_Y [0]
+      New connections: $procmux$433_Y [7:1] = { $procmux$433_Y [0] $procmux$433_Y [0] $procmux$433_Y [0] $procmux$433_Y [0] $procmux$433_Y [0] $procmux$433_Y [0] $procmux$433_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$487:
+      Old ports: A=$2$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$48, B=8'00000000, Y=$0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35
+      New ports: A=$procmux$451_Y [0], B=1'0, Y=$0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0]
+      New connections: $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [7:1] = { $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] $0$memwr$\act_buf$/work/rtl/top.sv:169$1_EN[7:0]$35 [0] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$478:
+      Old ports: A=$2$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$51, B=8'00000000, Y=$0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38
+      New ports: A=$procmux$433_Y [0], B=1'0, Y=$0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0]
+      New connections: $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [7:1] = { $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] $0$memwr$\weight_buf$/work/rtl/top.sv:171$2_EN[7:0]$38 [0] }
+  Optimizing cells in module \conv2d_top.
+Performed a total of 11 changes.
+
+28. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+29. Executing OPT_DFF pass (perform DFF optimizations).
+
+30. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 109 unused wires.
+<suppressed ~1 debug messages>
+
+31. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+32. Rerunning OPT passes. (Maybe there is more to do…)
+
+33. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~28 debug messages>
+
+34. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+35. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+36. Executing OPT_DFF pass (perform DFF optimizations).
+
+37. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+38. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+39. Executing FSM pass (extract and optimize FSM).
+
+39.1. Executing FSM_DETECT pass (finding FSMs in design).
+Not marking conv2d_top.s_axil_bresp as FSM state register:
+    Register is connected to module port.
+    Users of register don't seem to benefit from recoding.
+Not marking conv2d_top.s_axil_rresp as FSM state register:
+    Register is connected to module port.
+    Users of register don't seem to benefit from recoding.
+Found FSM state register conv2d_top.state.
+
+39.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+Extracting FSM `\state' from module `\conv2d_top'.
+  found $dff cell for state register: $procdff$697
+  root of input selection tree: $0\state[2:0]
+  found reset state: 3'000 (guessed from mux tree)
+  found ctrl input: \rst
+  found ctrl input: $eq$/work/rtl/top.sv:152$31_Y
+  found ctrl input: \req_valid
+  found ctrl input: \mac_en
+  found ctrl input: $eq$/work/rtl/top.sv:127$15_Y
+  found ctrl input: $eq$/work/rtl/top.sv:127$13_Y
+  found state code: 3'000
+  found ctrl input: \reg_start
+  found state code: 3'100
+  found ctrl input: \compute_done
+  found state code: 3'011
+  found state code: 3'010
+  found state code: 3'001
+  found ctrl output: $eq$/work/rtl/top.sv:127$13_Y
+  found ctrl output: $eq$/work/rtl/top.sv:127$15_Y
+  found ctrl output: \mac_en
+  found ctrl output: \req_valid
+  found ctrl output: $eq$/work/rtl/top.sv:152$31_Y
+  ctrl inputs: { \compute_done \reg_start \rst }
+  ctrl outputs: { $eq$/work/rtl/top.sv:152$31_Y $eq$/work/rtl/top.sv:127$15_Y $eq$/work/rtl/top.sv:127$13_Y $0\state[2:0] \req_valid \mac_en }
+  transition:      3'000 3'-00 ->      3'000 8'00100000
+  transition:      3'000 3'-10 ->      3'001 8'00100100
+  transition:      3'000 3'--1 ->      3'000 8'00100000
+  transition:      3'100 3'-00 ->      3'000 8'10000000
+  transition:      3'100 3'-10 ->      3'100 8'10010000
+  transition:      3'100 3'--1 ->      3'000 8'10000000
+  transition:      3'010 3'0-0 ->      3'010 8'00001001
+  transition:      3'010 3'1-0 ->      3'011 8'00001101
+  transition:      3'010 3'--1 ->      3'000 8'00000001
+  transition:      3'001 3'--0 ->      3'010 8'01001000
+  transition:      3'001 3'--1 ->      3'000 8'01000000
+  transition:      3'011 3'--0 ->      3'100 8'00010010
+  transition:      3'011 3'--1 ->      3'000 8'00000010
+
+39.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\state$704' from module `\conv2d_top'.
+
+39.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 6 unused cells and 6 unused wires.
+<suppressed ~7 debug messages>
+
+39.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+Optimizing FSM `$fsm$\state$704' from module `\conv2d_top'.
+
+39.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+Recoding FSM `$fsm$\state$704' from module `\conv2d_top' using `auto' encoding:
+  mapping auto encoding to `one-hot` for this FSM.
+  000 -> ----1
+  100 -> ---1-
+  010 -> --1--
+  001 -> -1---
+  011 -> 1----
+
+39.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+FSM `$fsm$\state$704' from module `conv2d_top':
+-------------------------------------
+
+  Information on FSM $fsm$\state$704 (\state):
+
+  Number of input signals:    3
+  Number of output signals:   8
+  Number of state bits:       5
+
+  Input signals:
+    0: \rst
+    1: \reg_start
+    2: \compute_done
+
+  Output signals:
+    0: \mac_en
+    1: \req_valid
+    2: $0\state[2:0] [0]
+    3: $0\state[2:0] [1]
+    4: $0\state[2:0] [2]
+    5: $eq$/work/rtl/top.sv:127$13_Y
+    6: $eq$/work/rtl/top.sv:127$15_Y
+    7: $eq$/work/rtl/top.sv:152$31_Y
+
+  State encoding:
+    0:    5'----1  <RESET STATE>
+    1:    5'---1-
+    2:    5'--1--
+    3:    5'-1---
+    4:    5'1----
+
+  Transition Table (state_in, ctrl_in, state_out, ctrl_out):
+      0:     0 3'-00   ->     0 8'00100000
+      1:     0 3'--1   ->     0 8'00100000
+      2:     0 3'-10   ->     3 8'00100100
+      3:     1 3'-00   ->     0 8'10000000
+      4:     1 3'--1   ->     0 8'10000000
+      5:     1 3'-10   ->     1 8'10010000
+      6:     2 3'--1   ->     0 8'00000001
+      7:     2 3'0-0   ->     2 8'00001001
+      8:     2 3'1-0   ->     4 8'00001101
+      9:     3 3'--1   ->     0 8'01000000
+     10:     3 3'--0   ->     2 8'01001000
+     11:     4 3'--1   ->     0 8'00000010
+     12:     4 3'--0   ->     1 8'00010010
+
+-------------------------------------
+
+39.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+Mapping FSM `$fsm$\state$704' from module `\conv2d_top'.
+
+40. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~8 debug messages>
+
+41. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~51 debug messages>
+Removed a total of 17 cells.
+
+42. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~27 debug messages>
+
+43. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+44. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+45. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$696 ($dff) from module conv2d_top (D = $procmux$586_Y, Q = \compute_valid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$781 ($sdff) from module conv2d_top (D = 1'1, Q = \compute_valid).
+Adding SRST signal on $procdff$695 ($dff) from module conv2d_top (D = $procmux$594_Y, Q = \oc_cnt, rval = 3'000).
+Adding EN signal on $auto$ff.cc:266:slice$783 ($sdff) from module conv2d_top (D = $procmux$592_Y, Q = \oc_cnt).
+Adding SRST signal on $procdff$694 ($dff) from module conv2d_top (D = $procmux$605_Y, Q = \w_cnt, rval = 5'00000).
+Adding EN signal on $auto$ff.cc:266:slice$785 ($sdff) from module conv2d_top (D = $procmux$601_Y, Q = \w_cnt).
+Adding SRST signal on $procdff$693 ($dff) from module conv2d_top (D = $procmux$618_Y, Q = \h_cnt, rval = 5'00000).
+Adding EN signal on $auto$ff.cc:266:slice$789 ($sdff) from module conv2d_top (D = $add$/work/rtl/top.sv:135$21_Y [4:0], Q = \h_cnt).
+Adding SRST signal on $procdff$692 ($dff) from module conv2d_top (D = \mac_en, Q = \busy, rval = 1'0).
+Adding SRST signal on $procdff$691 ($dff) from module conv2d_top (D = $procmux$581_Y, Q = \done, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$794 ($sdff) from module conv2d_top (D = $procmux$581_Y, Q = \done).
+Adding SRST signal on $procdff$690 ($dff) from module conv2d_top (D = $procmux$570_Y, Q = \out_buf[0], rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$798 ($sdff) from module conv2d_top (D = \u_req.out_data, Q = \out_buf[0]).
+Adding EN signal on $procdff$683 ($dff) from module conv2d_top (D = \s_axil_wdata, Q = \bias_buf[0]).
+Adding SRST signal on $procdff$682 ($dff) from module conv2d_top (D = $procmux$522_Y, Q = \reg_scale_shift, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$813 ($sdff) from module conv2d_top (D = \s_axil_wdata, Q = \reg_scale_shift).
+Adding SRST signal on $procdff$681 ($dff) from module conv2d_top (D = $procmux$531_Y, Q = \reg_start, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$819 ($sdff) from module conv2d_top (D = \s_axil_wdata [0], Q = \reg_start).
+Adding SRST signal on $procdff$680 ($dff) from module conv2d_top (D = $procmux$539_Y, Q = \s_axil_rvalid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$823 ($sdff) from module conv2d_top (D = $procmux$539_Y, Q = \s_axil_rvalid).
+Adding EN signal on $procdff$679 ($dff) from module conv2d_top (D = 2'00, Q = \s_axil_rresp).
+Adding SRST signal on $procdff$678 ($dff) from module conv2d_top (D = $procmux$554_Y, Q = \s_axil_rdata, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$828 ($sdff) from module conv2d_top (D = $procmux$552_Y, Q = \s_axil_rdata).
+Adding SRST signal on $procdff$677 ($dff) from module conv2d_top (D = \s_axil_arvalid, Q = \s_axil_arready, rval = 1'0).
+Adding SRST signal on $procdff$676 ($dff) from module conv2d_top (D = $procmux$562_Y, Q = \s_axil_bvalid, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$831 ($sdff) from module conv2d_top (D = $procmux$562_Y, Q = \s_axil_bvalid).
+Adding EN signal on $procdff$675 ($dff) from module conv2d_top (D = 2'00, Q = \s_axil_bresp).
+Adding SRST signal on $procdff$674 ($dff) from module conv2d_top (D = \s_axil_wvalid, Q = \s_axil_wready, rval = 1'0).
+Adding SRST signal on $procdff$673 ($dff) from module conv2d_top (D = \s_axil_awvalid, Q = \s_axil_awready, rval = 1'0).
+Adding SRST signal on $flatten\u_req.$procdff$698 ($dff) from module conv2d_top (D = $flatten\u_req.$procmux$663_Y, Q = \u_req.out_data, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$838 ($sdff) from module conv2d_top (D = $flatten\u_req.$procmux$661_Y, Q = \u_req.out_data).
+Adding SRST signal on $flatten\u_mac.$procdff$699 ($dff) from module conv2d_top (D = $flatten\u_mac.$procmux$668_Y, Q = \u_mac.acc_out, rval = 0).
+Adding EN signal on $auto$ff.cc:266:slice$840 ($sdff) from module conv2d_top (D = $flatten\u_mac.$add$/work/rtl/top.sv:252$161_Y, Q = \u_mac.acc_out).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$835 ($dffe) from module conv2d_top.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$835 ($dffe) from module conv2d_top.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$827 ($dffe) from module conv2d_top.
+Setting constant 0-bit at position 1 on $auto$ff.cc:266:slice$827 ($dffe) from module conv2d_top.
+
+46. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 43 unused cells and 65 unused wires.
+<suppressed ~44 debug messages>
+
+47. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~3 debug messages>
+
+48. Rerunning OPT passes. (Maybe there is more to do…)
+
+49. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+50. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+51. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~6 debug messages>
+Removed a total of 2 cells.
+
+52. Executing OPT_DFF pass (perform DFF optimizations).
+
+53. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+54. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+55. Rerunning OPT passes. (Maybe there is more to do…)
+
+56. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+57. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+58. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+59. Executing OPT_DFF pass (perform DFF optimizations).
+
+60. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+61. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+62. Executing WREDUCE pass (reducing word size of cells).
+Removed top 27 address bits (of 32) from memory init port conv2d_top.$auto$proc_memwr.cc:45:proc_memwr$700 (act_buf).
+Removed top 28 address bits (of 32) from memory init port conv2d_top.$auto$proc_memwr.cc:45:proc_memwr$701 (weight_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:188$89 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:189$92 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:190$96 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:191$100 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:192$104 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:193$109 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:194$114 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:195$118 (act_buf).
+Removed top 27 address bits (of 32) from memory read port conv2d_top.$memrd$\act_buf$/work/rtl/top.sv:196$123 (act_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:198$128 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:198$129 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:199$130 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:199$131 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:200$132 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:200$133 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:201$134 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:201$135 (weight_buf).
+Removed top 28 address bits (of 32) from memory read port conv2d_top.$memrd$\weight_buf$/work/rtl/top.sv:202$136 (weight_buf).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$lt$/work/rtl/top.sv:135$20 ($lt).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:135$21 ($add).
+Removed top 26 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:135$21 ($add).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:136$22 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:136$22 ($add).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:137$23 ($add).
+Removed top 29 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:137$23 ($add).
+Removed top 28 bits (of 32) from port B of cell conv2d_top.$eq$/work/rtl/top.sv:167$59 ($eq).
+Removed top 23 bits (of 32) from port B of cell conv2d_top.$ge$/work/rtl/top.sv:168$66 ($ge).
+Removed top 23 bits (of 32) from port B of cell conv2d_top.$lt$/work/rtl/top.sv:168$67 ($lt).
+Removed top 23 bits (of 32) from port B of cell conv2d_top.$sub$/work/rtl/top.sv:169$75 ($sub).
+Removed top 22 bits (of 32) from port B of cell conv2d_top.$ge$/work/rtl/top.sv:170$77 ($ge).
+Removed top 22 bits (of 32) from port B of cell conv2d_top.$lt$/work/rtl/top.sv:170$78 ($lt).
+Removed top 22 bits (of 32) from port B of cell conv2d_top.$sub$/work/rtl/top.sv:171$83 ($sub).
+Removed top 22 bits (of 32) from port B of cell conv2d_top.$eq$/work/rtl/top.sv:172$85 ($eq).
+Removed top 29 bits (of 32) from port B of cell conv2d_top.$eq$/work/rtl/top.sv:179$87 ($eq).
+Removed top 21 bits (of 32) from port B of cell conv2d_top.$eq$/work/rtl/top.sv:181$88 ($eq).
+Removed top 29 bits (of 32) from port B of cell conv2d_top.$mul$/work/rtl/top.sv:188$90 ($mul).
+Removed top 24 bits (of 32) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:188$90 ($mul).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:189$95 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:189$95 ($add).
+Removed top 27 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:189$95 ($add).
+Removed top 24 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:190$98 ($add).
+Removed top 23 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:190$98 ($add).
+Removed top 23 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:190$99 ($add).
+Removed top 30 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:190$99 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:190$99 ($add).
+Removed top 4 bits (of 9) from port A of cell conv2d_top.$add$/work/rtl/top.sv:190$99 ($add).
+Removed top 26 bits (of 32) from port A of cell conv2d_top.$mul$/work/rtl/top.sv:191$102 ($mul).
+Removed top 29 bits (of 32) from port B of cell conv2d_top.$mul$/work/rtl/top.sv:191$102 ($mul).
+Removed top 23 bits (of 32) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:191$102 ($mul).
+Removed top 23 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:191$103 ($add).
+Removed top 22 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:191$103 ($add).
+Removed top 22 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:192$108 ($add).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:192$108 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:192$108 ($add).
+Removed top 5 bits (of 10) from port A of cell conv2d_top.$add$/work/rtl/top.sv:192$108 ($add).
+Removed top 22 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:193$113 ($add).
+Removed top 30 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:193$113 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:193$113 ($add).
+Removed top 5 bits (of 10) from port A of cell conv2d_top.$add$/work/rtl/top.sv:193$113 ($add).
+Removed top 30 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:194$115 ($add).
+Removed top 26 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:194$115 ($add).
+Removed top 26 bits (of 32) from port A of cell conv2d_top.$mul$/work/rtl/top.sv:194$116 ($mul).
+Removed top 29 bits (of 32) from port B of cell conv2d_top.$mul$/work/rtl/top.sv:194$116 ($mul).
+Removed top 23 bits (of 32) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:194$116 ($mul).
+Removed top 23 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:194$117 ($add).
+Removed top 22 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:194$117 ($add).
+Removed top 22 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:195$122 ($add).
+Removed top 31 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:195$122 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:195$122 ($add).
+Removed top 5 bits (of 10) from port A of cell conv2d_top.$add$/work/rtl/top.sv:195$122 ($add).
+Removed top 22 bits (of 32) from port A of cell conv2d_top.$add$/work/rtl/top.sv:196$127 ($add).
+Removed top 30 bits (of 32) from port B of cell conv2d_top.$add$/work/rtl/top.sv:196$127 ($add).
+Removed top 27 bits (of 32) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:196$127 ($add).
+Removed top 5 bits (of 10) from port A of cell conv2d_top.$add$/work/rtl/top.sv:196$127 ($add).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$484 ($mux).
+Removed top 27 bits (of 32) from mux cell conv2d_top.$procmux$493 ($mux).
+Removed top 27 bits (of 32) from FF cell conv2d_top.$auto$ff.cc:266:slice$814 ($sdffe).
+Removed top 24 bits (of 32) from port B of cell conv2d_top.$flatten\u_req.$lt$/work/rtl/top.sv:273$143 ($lt).
+Removed top 24 bits (of 32) from port B of cell conv2d_top.$flatten\u_req.$gt$/work/rtl/top.sv:272$142 ($gt).
+Removed top 4 bits (of 9) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:190$98 ($add).
+Removed top 3 bits (of 8) from port A of cell conv2d_top.$add$/work/rtl/top.sv:190$98 ($add).
+Removed top 5 bits (of 10) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:191$103 ($add).
+Removed top 4 bits (of 9) from port A of cell conv2d_top.$add$/work/rtl/top.sv:191$103 ($add).
+Removed top 5 bits (of 10) from port Y of cell conv2d_top.$add$/work/rtl/top.sv:194$117 ($add).
+Removed top 4 bits (of 9) from port A of cell conv2d_top.$add$/work/rtl/top.sv:194$117 ($add).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$445 ($mux).
+Removed top 27 bits (of 32) from mux cell conv2d_top.$procmux$463 ($mux).
+Removed top 3 bits (of 8) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:188$90 ($mul).
+Removed top 4 bits (of 9) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:191$102 ($mul).
+Removed top 4 bits (of 9) from port Y of cell conv2d_top.$mul$/work/rtl/top.sv:194$116 ($mul).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$398 ($mux).
+Removed top 27 bits (of 32) from mux cell conv2d_top.$procmux$425 ($mux).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$332 ($mux).
+Removed top 27 bits (of 32) from mux cell conv2d_top.$procmux$368 ($mux).
+Removed top 27 bits (of 32) from mux cell conv2d_top.$procmux$248 ($mux).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$293 ($mux).
+Removed top 25 bits (of 32) from port Y of cell conv2d_top.$sub$/work/rtl/top.sv:169$75 ($sub).
+Removed top 25 bits (of 32) from port A of cell conv2d_top.$sub$/work/rtl/top.sv:169$75 ($sub).
+Removed top 8 bits (of 9) from port B of cell conv2d_top.$sub$/work/rtl/top.sv:169$75 ($sub).
+Removed top 28 bits (of 32) from mux cell conv2d_top.$procmux$200 ($mux).
+Removed top 26 bits (of 32) from port Y of cell conv2d_top.$sub$/work/rtl/top.sv:171$83 ($sub).
+Removed top 26 bits (of 32) from port A of cell conv2d_top.$sub$/work/rtl/top.sv:171$83 ($sub).
+Removed top 9 bits (of 10) from port B of cell conv2d_top.$sub$/work/rtl/top.sv:171$83 ($sub).
+Removed top 27 bits (of 32) from wire conv2d_top.$0$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$33.
+Removed top 28 bits (of 32) from wire conv2d_top.$0$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$36.
+Removed top 27 bits (of 32) from wire conv2d_top.$2$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$46.
+Removed top 28 bits (of 32) from wire conv2d_top.$2$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$49.
+Removed top 27 bits (of 32) from wire conv2d_top.$3$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$53.
+Removed top 28 bits (of 32) from wire conv2d_top.$3$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$56.
+Removed top 27 bits (of 32) from wire conv2d_top.$4$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$60.
+Removed top 28 bits (of 32) from wire conv2d_top.$4$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$63.
+Removed top 27 bits (of 32) from wire conv2d_top.$5$memwr$\act_buf$/work/rtl/top.sv:169$1_ADDR[31:0]$69.
+Removed top 28 bits (of 32) from wire conv2d_top.$5$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$72.
+Removed top 28 bits (of 32) from wire conv2d_top.$6$memwr$\weight_buf$/work/rtl/top.sv:171$2_ADDR[31:0]$80.
+Removed top 26 bits (of 32) from wire conv2d_top.$add$/work/rtl/top.sv:135$21_Y.
+Removed top 27 bits (of 32) from wire conv2d_top.$add$/work/rtl/top.sv:136$22_Y.
+Removed top 27 bits (of 32) from wire conv2d_top.$add$/work/rtl/top.sv:190$99_Y.
+Removed top 3 bits (of 5) from wire conv2d_top.$auto$fsm_map.cc:170:map_fsm$711.
+
+63. Executing PEEPOPT pass (run peephole optimizers).
+
+64. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 14 unused wires.
+<suppressed ~1 debug messages>
+
+65. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module conv2d_top:
+  creating $macc model for $add$/work/rtl/top.sv:135$21 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:136$22 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:137$23 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:189$95 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:190$98 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:190$99 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:191$103 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:192$108 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:193$113 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:194$115 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:194$117 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:195$122 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:196$127 ($add).
+  creating $macc model for $add$/work/rtl/top.sv:205$138 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$154 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$155 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$156 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$157 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$158 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$159 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$160 ($add).
+  creating $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$161 ($add).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:241$144 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:242$145 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:243$146 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:244$147 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:245$148 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:246$149 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:247$150 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:248$151 ($mul).
+  creating $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:249$152 ($mul).
+  creating $macc model for $mul$/work/rtl/top.sv:188$90 ($mul).
+  creating $macc model for $mul$/work/rtl/top.sv:191$102 ($mul).
+  creating $macc model for $mul$/work/rtl/top.sv:194$116 ($mul).
+  creating $macc model for $sub$/work/rtl/top.sv:169$75 ($sub).
+  creating $macc model for $sub$/work/rtl/top.sv:171$83 ($sub).
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$160 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$159 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$158 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$157 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$156 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$155 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$add$/work/rtl/top.sv:252$154 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:241$144 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:249$152 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:248$151 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:247$150 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:246$149 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:245$148 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:244$147 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:243$146 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $flatten\u_mac.$mul$/work/rtl/top.sv:242$145 into $flatten\u_mac.$add$/work/rtl/top.sv:252$161.
+  merging $macc model for $mul$/work/rtl/top.sv:194$116 into $add$/work/rtl/top.sv:194$117.
+  merging $macc model for $mul$/work/rtl/top.sv:191$102 into $add$/work/rtl/top.sv:191$103.
+  merging $macc model for $mul$/work/rtl/top.sv:188$90 into $add$/work/rtl/top.sv:190$98.
+  creating $alu model for $macc $sub$/work/rtl/top.sv:171$83.
+  creating $alu model for $macc $sub$/work/rtl/top.sv:169$75.
+  creating $alu model for $macc $add$/work/rtl/top.sv:205$138.
+  creating $alu model for $macc $add$/work/rtl/top.sv:196$127.
+  creating $alu model for $macc $add$/work/rtl/top.sv:195$122.
+  creating $alu model for $macc $add$/work/rtl/top.sv:194$115.
+  creating $alu model for $macc $add$/work/rtl/top.sv:193$113.
+  creating $alu model for $macc $add$/work/rtl/top.sv:192$108.
+  creating $alu model for $macc $add$/work/rtl/top.sv:190$99.
+  creating $alu model for $macc $add$/work/rtl/top.sv:189$95.
+  creating $alu model for $macc $add$/work/rtl/top.sv:137$23.
+  creating $alu model for $macc $add$/work/rtl/top.sv:136$22.
+  creating $alu model for $macc $add$/work/rtl/top.sv:135$21.
+  creating $macc cell for $add$/work/rtl/top.sv:191$103: $auto$alumacc.cc:365:replace_macc$857
+  creating $macc cell for $add$/work/rtl/top.sv:194$117: $auto$alumacc.cc:365:replace_macc$858
+  creating $macc cell for $add$/work/rtl/top.sv:190$98: $auto$alumacc.cc:365:replace_macc$859
+  creating $macc cell for $flatten\u_mac.$add$/work/rtl/top.sv:252$161: $auto$alumacc.cc:365:replace_macc$860
+  creating $alu model for $flatten\u_req.$gt$/work/rtl/top.sv:272$142 ($gt): new $alu
+  creating $alu model for $flatten\u_req.$lt$/work/rtl/top.sv:273$143 ($lt): new $alu
+  creating $alu model for $ge$/work/rtl/top.sv:168$66 ($ge): new $alu
+  creating $alu model for $ge$/work/rtl/top.sv:170$77 ($ge): new $alu
+  creating $alu model for $lt$/work/rtl/top.sv:135$20 ($lt): new $alu
+  creating $alu model for $lt$/work/rtl/top.sv:168$67 ($lt): new $alu
+  creating $alu model for $lt$/work/rtl/top.sv:170$78 ($lt): new $alu
+  creating $alu cell for $lt$/work/rtl/top.sv:170$78: $auto$alumacc.cc:485:replace_alu$868
+  creating $alu cell for $lt$/work/rtl/top.sv:168$67: $auto$alumacc.cc:485:replace_alu$879
+  creating $alu cell for $lt$/work/rtl/top.sv:135$20: $auto$alumacc.cc:485:replace_alu$890
+  creating $alu cell for $ge$/work/rtl/top.sv:170$77: $auto$alumacc.cc:485:replace_alu$901
+  creating $alu cell for $ge$/work/rtl/top.sv:168$66: $auto$alumacc.cc:485:replace_alu$910
+  creating $alu cell for $flatten\u_req.$lt$/work/rtl/top.sv:273$143: $auto$alumacc.cc:485:replace_alu$919
+  creating $alu cell for $flatten\u_req.$gt$/work/rtl/top.sv:272$142: $auto$alumacc.cc:485:replace_alu$932
+  creating $alu cell for $add$/work/rtl/top.sv:135$21: $auto$alumacc.cc:485:replace_alu$939
+  creating $alu cell for $add$/work/rtl/top.sv:136$22: $auto$alumacc.cc:485:replace_alu$942
+  creating $alu cell for $add$/work/rtl/top.sv:137$23: $auto$alumacc.cc:485:replace_alu$945
+  creating $alu cell for $add$/work/rtl/top.sv:189$95: $auto$alumacc.cc:485:replace_alu$948
+  creating $alu cell for $add$/work/rtl/top.sv:190$99: $auto$alumacc.cc:485:replace_alu$951
+  creating $alu cell for $add$/work/rtl/top.sv:192$108: $auto$alumacc.cc:485:replace_alu$954
+  creating $alu cell for $add$/work/rtl/top.sv:193$113: $auto$alumacc.cc:485:replace_alu$957
+  creating $alu cell for $add$/work/rtl/top.sv:194$115: $auto$alumacc.cc:485:replace_alu$960
+  creating $alu cell for $add$/work/rtl/top.sv:195$122: $auto$alumacc.cc:485:replace_alu$963
+  creating $alu cell for $add$/work/rtl/top.sv:196$127: $auto$alumacc.cc:485:replace_alu$966
+  creating $alu cell for $add$/work/rtl/top.sv:205$138: $auto$alumacc.cc:485:replace_alu$969
+  creating $alu cell for $sub$/work/rtl/top.sv:169$75: $auto$alumacc.cc:485:replace_alu$972
+  creating $alu cell for $sub$/work/rtl/top.sv:171$83: $auto$alumacc.cc:485:replace_alu$975
+  created 20 $alu and 4 $macc cells.
+
+66. Executing SHARE pass (SAT-based resource sharing).
+Found 12 cells in module conv2d_top that may be considered for resource sharing.
+  Analyzing resource sharing options for $mul$/work/rtl/top.sv:194$116 ($mul):
+    Found cell that is never activated: $mul$/work/rtl/top.sv:194$116
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $mul$/work/rtl/top.sv:191$102 ($mul):
+    Found cell that is never activated: $mul$/work/rtl/top.sv:191$102
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $mul$/work/rtl/top.sv:188$90 ($mul):
+    Found cell that is never activated: $mul$/work/rtl/top.sv:188$90
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:249$152 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:249$152
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:248$151 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$160
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:248$151
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:247$150 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$159
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:247$150
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:246$149 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$158
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:246$149
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:245$148 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$157
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:245$148
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:244$147 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$156
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:244$147
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:243$146 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$155
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:243$146
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:242$145 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$add$/work/rtl/top.sv:252$154
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:242$145
+    Cell is never active. Sharing is pointless, we simply remove it.
+  Analyzing resource sharing options for $flatten\u_mac.$mul$/work/rtl/top.sv:241$144 ($mul):
+    Found cell that is never activated: $flatten\u_mac.$mul$/work/rtl/top.sv:241$144
+    Cell is never active. Sharing is pointless, we simply remove it.
+Removing 19 cells in module conv2d_top:
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:241$144 ($mul).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:242$145 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$154 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:243$146 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$155 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:244$147 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$156 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:245$148 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$157 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:246$149 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$158 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:247$150 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$159 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:248$151 ($mul).
+  Removing cell $flatten\u_mac.$add$/work/rtl/top.sv:252$160 ($add).
+  Removing cell $flatten\u_mac.$mul$/work/rtl/top.sv:249$152 ($mul).
+  Removing cell $mul$/work/rtl/top.sv:188$90 ($mul).
+  Removing cell $mul$/work/rtl/top.sv:191$102 ($mul).
+  Removing cell $mul$/work/rtl/top.sv:194$116 ($mul).
+
+67. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~3 debug messages>
+
+68. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+69. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+70. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+71. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+72. Executing OPT_DFF pass (perform DFF optimizations).
+
+73. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 3 unused cells and 28 unused wires.
+<suppressed ~6 debug messages>
+
+74. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+75. Rerunning OPT passes. (Maybe there is more to do…)
+
+76. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~14 debug messages>
+
+77. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+78. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+79. Executing OPT_DFF pass (perform DFF optimizations).
+
+80. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+81. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+82. Executing MEMORY pass.
+
+82.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+82.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+82.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+  Analyzing conv2d_top.act_buf write port 0.
+  Analyzing conv2d_top.weight_buf write port 0.
+
+82.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+82.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `\act_buf'[0] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[1] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[2] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[3] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[4] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[5] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[6] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[7] in module `\conv2d_top': no output FF found.
+Checking read port `\act_buf'[8] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[0] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[1] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[2] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[3] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[4] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[5] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[6] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[7] in module `\conv2d_top': no output FF found.
+Checking read port `\weight_buf'[8] in module `\conv2d_top': no output FF found.
+Checking read port address `\act_buf'[0] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[1] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[2] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[3] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[4] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[5] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[6] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[7] in module `\conv2d_top': no address FF found.
+Checking read port address `\act_buf'[8] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[0] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[1] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[2] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[3] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[4] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[5] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[6] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[7] in module `\conv2d_top': no address FF found.
+Checking read port address `\weight_buf'[8] in module `\conv2d_top': no address FF found.
+
+82.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+82.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+Consolidating read ports of memory conv2d_top.act_buf by address:
+Consolidating read ports of memory conv2d_top.weight_buf by address:
+  Merging ports 1, 2 (address 4'0111).
+  Merging ports 1, 3 (address 4'0110).
+  Merging ports 1, 4 (address 4'0100).
+  Merging ports 1, 5 (address 4'0100).
+  Merging ports 1, 6 (address 4'0000).
+  Merging ports 1, 7 (address 4'0000).
+  Merging ports 1, 8 (address 4'0000).
+Consolidating read ports of memory conv2d_top.weight_buf by address:
+  Merging ports 0, 1 (address 4'1000).
+
+82.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+82.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 7 unused wires.
+<suppressed ~1 debug messages>
+
+82.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+83. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+84. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~53 debug messages>
+
+85. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+86. Executing OPT_DFF pass (perform DFF optimizations).
+
+87. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 7 unused cells and 37 unused wires.
+<suppressed ~8 debug messages>
+
+88. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory \act_buf in module \conv2d_top:
+  created 25 $dff cells and 0 static cells of width 8.
+  read interface: 0 $dff and 279 $mux cells.
+  write interface: 25 write mux blocks.
+Mapping memory \weight_buf in module \conv2d_top:
+  created 16 $dff cells and 0 static cells of width 8.
+  read interface: 0 $dff and 0 $mux cells.
+  write interface: 16 write mux blocks.
+
+89. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~149 debug messages>
+
+90. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+91. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~59 debug messages>
+
+92. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$549:
+      Old ports: A=32'11011110101011011011111011101111, B={ \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] [7] \out_buf[0] }, Y=$procmux$549_Y
+      New ports: A=9'011101111, B={ \out_buf[0] [7] \out_buf[0] }, Y=$procmux$549_Y [8:0]
+      New connections: $procmux$549_Y [31:9] = { $procmux$549_Y [7] $procmux$549_Y [7] $procmux$549_Y [8:7] $procmux$549_Y [7] $procmux$549_Y [7] $procmux$549_Y [7] $procmux$549_Y [8:7] $procmux$549_Y [8:7] $procmux$549_Y [8:7] $procmux$549_Y [7] $procmux$549_Y [8:7] $procmux$549_Y [7] $procmux$549_Y [8:7] $procmux$549_Y [7] $procmux$549_Y [7] $procmux$549_Y [7] $procmux$549_Y [7] }
+  Optimizing cells in module \conv2d_top.
+    Consolidated identical input bits for $mux cell $procmux$552:
+      Old ports: A=$procmux$549_Y, B={ 30'000000000000000000000000000000 \busy \done }, Y=$procmux$552_Y
+      New ports: A=$procmux$549_Y [8:0], B={ 7'0000000 \busy \done }, Y=$procmux$552_Y [8:0]
+      New connections: $procmux$552_Y [31:9] = { $procmux$552_Y [7] $procmux$552_Y [7] $procmux$552_Y [8:7] $procmux$552_Y [7] $procmux$552_Y [7] $procmux$552_Y [7] $procmux$552_Y [8:7] $procmux$552_Y [8:7] $procmux$552_Y [8:7] $procmux$552_Y [7] $procmux$552_Y [8:7] $procmux$552_Y [7] $procmux$552_Y [8:7] $procmux$552_Y [7] $procmux$552_Y [7] $procmux$552_Y [7] $procmux$552_Y [7] }
+  Optimizing cells in module \conv2d_top.
+Performed a total of 2 changes.
+
+93. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~117 debug messages>
+Removed a total of 39 cells.
+
+94. Executing OPT_SHARE pass.
+
+95. Executing OPT_DFF pass (perform DFF optimizations).
+
+96. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 29 unused cells and 439 unused wires.
+<suppressed ~37 debug messages>
+
+97. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~24 debug messages>
+
+98. Rerunning OPT passes. (Maybe there is more to do…)
+
+99. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~88 debug messages>
+
+100. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+101. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+102. Executing OPT_SHARE pass.
+
+103. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $memory\weight_buf[8]$2143 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[8]).
+Adding EN signal on $memory\weight_buf[7]$2141 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[7]).
+Adding EN signal on $memory\weight_buf[6]$2139 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[6]).
+Adding EN signal on $memory\weight_buf[5]$2137 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[5]).
+Adding EN signal on $memory\weight_buf[4]$2135 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[4]).
+Adding EN signal on $memory\weight_buf[3]$2133 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[3]).
+Adding EN signal on $memory\weight_buf[2]$2131 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[2]).
+Adding EN signal on $memory\weight_buf[1]$2129 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[1]).
+Adding EN signal on $memory\weight_buf[0]$2127 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \weight_buf[0]).
+Adding EN signal on $memory\act_buf[9]$1058 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[9]).
+Adding EN signal on $memory\act_buf[8]$1056 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[8]).
+Adding EN signal on $memory\act_buf[7]$1054 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[7]).
+Adding EN signal on $memory\act_buf[6]$1052 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[6]).
+Adding EN signal on $memory\act_buf[5]$1050 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[5]).
+Adding EN signal on $memory\act_buf[4]$1048 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[4]).
+Adding EN signal on $memory\act_buf[3]$1046 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[3]).
+Adding EN signal on $memory\act_buf[2]$1044 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[2]).
+Adding EN signal on $memory\act_buf[24]$1088 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[24]).
+Adding EN signal on $memory\act_buf[23]$1086 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[23]).
+Adding EN signal on $memory\act_buf[22]$1084 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[22]).
+Adding EN signal on $memory\act_buf[21]$1082 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[21]).
+Adding EN signal on $memory\act_buf[20]$1080 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[20]).
+Adding EN signal on $memory\act_buf[1]$1042 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[1]).
+Adding EN signal on $memory\act_buf[19]$1078 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[19]).
+Adding EN signal on $memory\act_buf[18]$1076 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[18]).
+Adding EN signal on $memory\act_buf[17]$1074 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[17]).
+Adding EN signal on $memory\act_buf[16]$1072 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[16]).
+Adding EN signal on $memory\act_buf[15]$1070 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[15]).
+Adding EN signal on $memory\act_buf[14]$1068 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[14]).
+Adding EN signal on $memory\act_buf[13]$1066 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[13]).
+Adding EN signal on $memory\act_buf[12]$1064 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[12]).
+Adding EN signal on $memory\act_buf[11]$1062 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[11]).
+Adding EN signal on $memory\act_buf[10]$1060 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[10]).
+Adding EN signal on $memory\act_buf[0]$1040 ($dff) from module conv2d_top (D = \s_axil_wdata [7:0], Q = \act_buf[0]).
+
+104. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 34 unused cells and 58 unused wires.
+<suppressed ~35 debug messages>
+
+105. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+106. Rerunning OPT passes. (Maybe there is more to do…)
+
+107. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~54 debug messages>
+
+108. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+109. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+110. Executing OPT_SHARE pass.
+
+111. Executing OPT_DFF pass (perform DFF optimizations).
+
+112. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+113. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+114. Executing TECHMAP pass (map to technology primitives).
+
+114.1. Executing Verilog-2005 frontend: /nix/store/c26m31cifv9fyym8p72j6cj5ilqgnh2z-yosys/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/nix/store/c26m31cifv9fyym8p72j6cj5ilqgnh2z-yosys/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+114.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $logic_or.
+Using template $paramod$21b43a343f2bc4ba62df8a2c90631d371d8e7ce8\_90_alu for cells of type $alu.
+Using template $paramod$672a140277c71df8314410f22acc08d55222c3c7\_90_alu for cells of type $alu.
+Using template $paramod$3ef7d3dd227da7627a99c5e5a6a4deb817573e39\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $eq.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper simplemap for cells of type $dffe.
+Using template $paramod$2653f68ddb8eab7b1907b4a20767b72a824a7a36\_90_alu for cells of type $alu.
+Using template $paramod$constmap:4621fcf06a436d1e2a4080e2ed9866a7d07a6e07$paramod$e765c459d3029c22a22a27989e94858fd9ebfa9c\_90_shift_ops_shr_shl_sshl_sshr for cells of type $sshr.
+Using template $paramod$8fdcfe020be5e507ba05385ffd706e02b549d39d\_90_alu for cells of type $alu.
+Using template $paramod$403d74038787d91c0514bba9bf1032f6fa919203\_90_alu for cells of type $alu.
+Using template $paramod$32a7b7b86c07519b7537abc18e96f0331f97914d\_90_alu for cells of type $alu.
+Using extmapper maccmap for cells of type $macc.
+  add { \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 [7] \u_mac.a0 } * { \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] [7] \weight_buf[0] } (32x32 bits, unsigned)
+  add { \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 [7] \u_mac.a8 } * { \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] [7] \weight_buf[8] } (32x32 bits, unsigned)
+  add { \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 [7] \u_mac.a7 } * { \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] [7] \weight_buf[7] } (32x32 bits, unsigned)
+  add { \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 [7] \u_mac.a6 } * { \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] [7] \weight_buf[6] } (32x32 bits, unsigned)
+  add { \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 [7] \u_mac.a5 } * { \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] [7] \weight_buf[5] } (32x32 bits, unsigned)
+  add { \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 [7] \u_mac.a4 } * { \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] [7] \weight_buf[4] } (32x32 bits, unsigned)
+  add { \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 [7] \u_mac.a3 } * { \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] [7] \weight_buf[3] } (32x32 bits, unsigned)
+  add { \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 [7] \u_mac.a2 } * { \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] [7] \weight_buf[2] } (32x32 bits, unsigned)
+  add { \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 [7] \u_mac.a1 } * { \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] [7] \weight_buf[1] } (32x32 bits, unsigned)
+  add { $add$/work/rtl/top.sv:194$115_Y [5:1] \h_cnt [0] } * 3'101 (6x3 bits, unsigned)
+  add \w_cnt (5 bits, unsigned)
+Using extmapper simplemap for cells of type $dff.
+Using template $paramod$943564b9366bbc392bf4bbc801aa0a2d7742a4e0\_90_alu for cells of type $alu.
+  add \h_cnt * 3'101 (5x3 bits, unsigned)
+  add \w_cnt (5 bits, unsigned)
+Using extmapper simplemap for cells of type $reduce_bool.
+  add $add$/work/rtl/top.sv:135$21_Y * 3'101 (6x3 bits, unsigned)
+  add \w_cnt (5 bits, unsigned)
+Using extmapper simplemap for cells of type $sdff.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod$56f7ce6d87f8add68ca646dc02d7695a3189f8e5\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $sdffe.
+Using template $paramod$14958951841968c08e77836e0986cbad689c1afd\_90_alu for cells of type $alu.
+Using template $paramod$5e23d2e0f07f5403e3d2c5b606bab0c16e4174c1\_90_alu for cells of type $alu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000100000 for cells of type $lcu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000101 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000100 for cells of type $lcu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000100000 for cells of type $fa.
+Using template $paramod$fbc7873bff55778c0b3173955b7e4bce1d9d6834\_90_alu for cells of type $alu.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000000101 for cells of type $fa.
+Using template $paramod$b18e16801adf491a64caa0542270798e5d4ac6b6\_90_alu for cells of type $alu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000011001 for cells of type $lcu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000110 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~5457 debug messages>
+
+115. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~28216 debug messages>
+
+116. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~47847 debug messages>
+Removed a total of 15949 cells.
+
+117. Executing OPT_DFF pass (perform DFF optimizations).
+
+118. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 820 unused cells and 5002 unused wires.
+<suppressed ~821 debug messages>
+
+119. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~531 debug messages>
+
+120. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~492 debug messages>
+Removed a total of 164 cells.
+
+121. Executing OPT_DFF pass (perform DFF optimizations).
+Handling never-active EN on $auto$ff.cc:266:slice$6397 ($_SDFFE_PP0P_) from module conv2d_top (connecting SRST instead).
+Handling never-active EN on $auto$ff.cc:266:slice$6395 ($_SDFFE_PP0P_) from module conv2d_top (connecting SRST instead).
+Handling never-active EN on $auto$ff.cc:266:slice$6396 ($_SDFFE_PP0P_) from module conv2d_top (connecting SRST instead).
+Handling never-active EN on $auto$ff.cc:266:slice$6398 ($_SDFFE_PP0P_) from module conv2d_top (connecting SRST instead).
+Handling never-active EN on $auto$ff.cc:266:slice$6394 ($_SDFFE_PP0P_) from module conv2d_top (connecting SRST instead).
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$6394 ($_DFFE_PP_) from module conv2d_top.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$6398 ($_DFFE_PP_) from module conv2d_top.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$6396 ($_DFFE_PP_) from module conv2d_top.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$6395 ($_DFFE_PP_) from module conv2d_top.
+Setting constant 0-bit at position 0 on $auto$ff.cc:266:slice$6397 ($_DFFE_PP_) from module conv2d_top.
+
+122. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 9 unused cells and 7 unused wires.
+<suppressed ~10 debug messages>
+
+123. Rerunning OPT passes (Removed registers in this run.)
+
+124. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~387 debug messages>
+
+125. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~1122 debug messages>
+Removed a total of 374 cells.
+
+126. Executing OPT_DFF pass (perform DFF optimizations).
+
+127. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 90 unused wires.
+<suppressed ~1 debug messages>
+
+128. Executing ABC pass (technology mapping using ABC).
+
+128.1. Extracting gate netlist of module `\conv2d_top' to `<abc-temp-dir>/input.blif'..
+Extracted 14748 gates and 15189 wires to a netlist network with 439 inputs and 109 outputs.
+
+128.1.1. Executing ABC.
+Running ABC command: "/nix/store/6l3aj1gi4lja8z5s4lan2k2cfz9mqkrz-yosys-abc/bin/abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+128.1.2. Re-integrating ABC results.
+ABC RESULTS:               MUX cells:     1045
+ABC RESULTS:               NOR cells:      815
+ABC RESULTS:               XOR cells:     3963
+ABC RESULTS:              XNOR cells:     1199
+ABC RESULTS:               NOT cells:      758
+ABC RESULTS:              NAND cells:      249
+ABC RESULTS:               AND cells:      112
+ABC RESULTS:                OR cells:     1779
+ABC RESULTS:             ORNOT cells:      372
+ABC RESULTS:            ANDNOT cells:     4980
+ABC RESULTS:        internal signals:    14641
+ABC RESULTS:           input signals:      439
+ABC RESULTS:          output signals:      109
+Removing temp directory.
+
+129. Executing OPT pass (performing simple optimizations).
+
+129.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~186 debug messages>
+
+129.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+<suppressed ~228 debug messages>
+Removed a total of 76 cells.
+
+129.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+129.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 7 unused cells and 2283 unused wires.
+<suppressed ~31 debug messages>
+
+129.5. Finished fast OPT passes.
+
+130. Executing HIERARCHY pass (managing design hierarchy).
+
+130.1. Analyzing design hierarchy..
+Top module:  \conv2d_top
+
+130.2. Analyzing design hierarchy..
+Top module:  \conv2d_top
+Removed 0 unused modules.
+
+131. Executing CHECK pass (checking for obvious problems).
+Checking module conv2d_top...
+Found and reported 0 problems.
+
+132. Printing statistics.
+
+=== conv2d_top ===
+
+   Number of wires:              15266
+   Number of wire bits:          16358
+   Number of public wires:         104
+   Number of public wire bits:    1039
+   Number of ports:                 21
+   Number of port bits:            150
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              15581
+     $_ANDNOT_                    4968
+     $_AND_                        112
+     $_DFFE_PP_                    304
+     $_DFF_P_                        7
+     $_MUX_                       1045
+     $_NAND_                       220
+     $_NOR_                        812
+     $_NOT_                        751
+     $_ORNOT_                      372
+     $_OR_                        1765
+     $_SDFFE_PP0P_                  75
+     $_SDFF_PP0_                     4
+     $_XNOR_                      1189
+     $_XOR_                       3955
+     $scopeinfo                      2
+
+133. Generating Graphviz representation of design.
+Writing dot description to `/work/runs/m3_run/06-yosys-synthesis/primitive_techmap.dot'.
+Dumping module conv2d_top to page 1.
+
+134. Executing OPT pass (performing simple optimizations).
+
+134.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+<suppressed ~2 debug messages>
+
+134.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+134.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+134.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+134.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+134.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+134.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+134.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+134.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+134.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \conv2d_top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Removed 0 multiplexer ports.
+
+134.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \conv2d_top.
+Performed a total of 0 changes.
+
+134.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\conv2d_top'.
+Removed a total of 0 cells.
+
+134.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+134.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+
+134.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module conv2d_top.
+
+134.16. Finished OPT passes. (There is nothing left to do.)
+
+135. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 2 unused cells and 37 unused wires.
+<suppressed ~39 debug messages>
+{
+   "creator": "Yosys 0.46 (git sha1 e97731b9dda91fa5fa53ed87df7c34163ba59a41, clang++ 17.0.6 -fPIC -O3)",
+   "invocation": "stat -json -liberty /work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib ",
+   "modules": {
+      "\\conv2d_top": {
+         "num_wires":         15227,
+         "num_wire_bits":     15868,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         15577,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_DFFE_PP_": 304,
+            "$_DFF_P_": 7,
+            "$_MUX_": 1045,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_SDFFE_PP0P_": 75,
+            "$_SDFF_PP0_": 4,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953
+         }
+      }
+   },
+      "design": {
+         "num_wires":         15227,
+         "num_wire_bits":     15868,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         15577,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_DFFE_PP_": 304,
+            "$_DFF_P_": 7,
+            "$_MUX_": 1045,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_SDFFE_PP0P_": 75,
+            "$_SDFF_PP0_": 4,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953
+         }
+      }
+}
+
+136. Printing statistics.
+
+=== conv2d_top ===
+
+   Number of wires:              15227
+   Number of wire bits:          15868
+   Number of public wires:          67
+   Number of public wire bits:     551
+   Number of ports:                 21
+   Number of port bits:            150
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              15577
+     $_ANDNOT_                    4968
+     $_AND_                        112
+     $_DFFE_PP_                    304
+     $_DFF_P_                        7
+     $_MUX_                       1045
+     $_NAND_                       220
+     $_NOR_                        812
+     $_NOT_                        751
+     $_ORNOT_                      372
+     $_OR_                        1765
+     $_SDFFE_PP0P_                  75
+     $_SDFF_PP0_                     4
+     $_XNOR_                      1189
+     $_XOR_                       3953
+
+   Area for cell type $_NOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_OR_ is unknown!
+   Area for cell type $_NOR_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+   Area for cell type $_XNOR_ is unknown!
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_ORNOT_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+   Area for cell type $_DFF_P_ is unknown!
+   Area for cell type $_DFFE_PP_ is unknown!
+   Area for cell type $_SDFF_PP0_ is unknown!
+   Area for cell type $_SDFFE_PP0P_ is unknown!
+
+[INFO] Applying tri-state buffer mapping from '/root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v'…
+
+137. Executing TECHMAP pass (map to technology primitives).
+
+137.1. Executing Verilog-2005 frontend: /root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v
+Parsing Verilog input from `/root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tribuff_map.v' to AST representation.
+Generating RTLIL representation for module `\$_TBUF_'.
+Successfully finished Verilog frontend.
+
+137.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~3 debug messages>
+
+138. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+[INFO] Applying latch mapping from '/root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v'…
+
+139. Executing TECHMAP pass (map to technology primitives).
+
+139.1. Executing Verilog-2005 frontend: /root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v
+Parsing Verilog input from `/root/.volare/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.tech/openlane/sky130_fd_sc_hd/latch_map.v' to AST representation.
+Generating RTLIL representation for module `\$_DLATCH_P_'.
+Generating RTLIL representation for module `\$_DLATCH_N_'.
+Successfully finished Verilog frontend.
+
+139.2. Continuing TECHMAP pass.
+No more expansions possible.
+<suppressed ~4 debug messages>
+
+140. Executing SIMPLEMAP pass (map simple cells to gate primitives).
+
+141. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+  cell sky130_fd_sc_hd__dfxtp_2 (noninv, pins=3, area=21.27) is a direct match for cell type $_DFF_P_.
+  cell sky130_fd_sc_hd__dfrtp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN0_.
+  cell sky130_fd_sc_hd__dfstp_2 (noninv, pins=4, area=26.28) is a direct match for cell type $_DFF_PN1_.
+  cell sky130_fd_sc_hd__dfbbn_2 (noninv, pins=6, area=35.03) is a direct match for cell type $_DFFSR_NNN_.
+  final dff cell mappings:
+    unmapped dff cell: $_DFF_N_
+    \sky130_fd_sc_hd__dfxtp_2 _DFF_P_ (.CLK( C), .D( D), .Q( Q));
+    unmapped dff cell: $_DFF_NN0_
+    unmapped dff cell: $_DFF_NN1_
+    unmapped dff cell: $_DFF_NP0_
+    unmapped dff cell: $_DFF_NP1_
+    \sky130_fd_sc_hd__dfrtp_2 _DFF_PN0_ (.CLK( C), .D( D), .Q( Q), .RESET_B( R));
+    \sky130_fd_sc_hd__dfstp_2 _DFF_PN1_ (.CLK( C), .D( D), .Q( Q), .SET_B( R));
+    unmapped dff cell: $_DFF_PP0_
+    unmapped dff cell: $_DFF_PP1_
+    \sky130_fd_sc_hd__dfbbn_2 _DFFSR_NNN_ (.CLK_N( C), .D( D), .Q( Q), .Q_N(~Q), .RESET_B( R), .SET_B( S));
+    unmapped dff cell: $_DFFSR_NNP_
+    unmapped dff cell: $_DFFSR_NPN_
+    unmapped dff cell: $_DFFSR_NPP_
+    unmapped dff cell: $_DFFSR_PNN_
+    unmapped dff cell: $_DFFSR_PNP_
+    unmapped dff cell: $_DFFSR_PPN_
+    unmapped dff cell: $_DFFSR_PPP_
+
+141.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+Mapping DFF cells in module `\conv2d_top':
+  mapped 390 $_DFF_P_ cells to \sky130_fd_sc_hd__dfxtp_2 cells.
+{
+   "creator": "Yosys 0.46 (git sha1 e97731b9dda91fa5fa53ed87df7c34163ba59a41, clang++ 17.0.6 -fPIC -O3)",
+   "invocation": "stat -json -liberty /work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib ",
+   "modules": {
+      "\\conv2d_top": {
+         "num_wires":         15685,
+         "num_wire_bits":     16326,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         16035,
+         "area":              8295.456000,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_MUX_": 1503,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953,
+            "sky130_fd_sc_hd__dfxtp_2": 390
+         }
+      }
+   },
+      "design": {
+         "num_wires":         15685,
+         "num_wire_bits":     16326,
+         "num_pub_wires":     67,
+         "num_pub_wire_bits": 551,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         16035,
+         "area":              8295.456000,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 4968,
+            "$_AND_": 112,
+            "$_MUX_": 1503,
+            "$_NAND_": 220,
+            "$_NOR_": 812,
+            "$_NOT_": 751,
+            "$_ORNOT_": 372,
+            "$_OR_": 1765,
+            "$_XNOR_": 1189,
+            "$_XOR_": 3953,
+            "sky130_fd_sc_hd__dfxtp_2": 390
+         }
+      }
+}
+
+142. Printing statistics.
+
+=== conv2d_top ===
+
+   Number of wires:              15685
+   Number of wire bits:          16326
+   Number of public wires:          67
+   Number of public wire bits:     551
+   Number of ports:                 21
+   Number of port bits:            150
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              16035
+     $_ANDNOT_                    4968
+     $_AND_                        112
+     $_MUX_                       1503
+     $_NAND_                       220
+     $_NOR_                        812
+     $_NOT_                        751
+     $_ORNOT_                      372
+     $_OR_                        1765
+     $_XNOR_                      1189
+     $_XOR_                       3953
+     sky130_fd_sc_hd__dfxtp_2      390
+
+   Area for cell type $_NOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_OR_ is unknown!
+   Area for cell type $_NOR_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+   Area for cell type $_XNOR_ is unknown!
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_ORNOT_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+
+   Chip area for module '\conv2d_top': 8295.456000
+     of which used for sequential elements: 8295.456000 (100.00%)
+
+[INFO] Using generated ABC script '/work/runs/m3_run/06-yosys-synthesis/DELAY_0.abc'…
+
+143. Executing ABC pass (technology mapping using ABC).
+
+143.1. Extracting gate netlist of module `\conv2d_top' to `/tmp/yosys-abc-oJdT7i/input.blif'..
+Extracted 15645 gates and 16138 wires to a netlist network with 491 inputs and 390 outputs.
+
+143.1.1. Executing ABC.
+Running ABC command: "/nix/store/6l3aj1gi4lja8z5s4lan2k2cfz9mqkrz-yosys-abc/bin/abc" -s -f /tmp/yosys-abc-oJdT7i/abc.script 2>&1
+ABC: ABC command line: "source /tmp/yosys-abc-oJdT7i/abc.script".
+ABC: 
+ABC: + read_blif /tmp/yosys-abc-oJdT7i/input.blif 
+ABC: + read_lib -w /work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.08 sec
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfbbn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfrtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfsbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfstp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dfxtp_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtn_4".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sky130_fd_sc_hd__dlxtp_1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sky130_fd_sc_hd__ebufn_8".
+ABC: Library "sky130_fd_sc_hd__tt_025C_1v80" from "/work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib" has 175 cells (17 skipped: 14 seq; 3 tri-state; 0 no func; 0 dont_use).  Time =     0.11 sec
+ABC: Memory =    9.54 MB. Time =     0.11 sec
+ABC: Warning: Detected 2 multi-output gates (for example, "sky130_fd_sc_hd__fa_1").
+ABC: + read_constr -v /work/runs/m3_run/06-yosys-synthesis/synthesis.abc.sdc 
+ABC: Setting driving cell to be "sky130_fd_sc_hd__inv_2/Y".
+ABC: Setting output load to be 33.442001.
+ABC: + source /work/runs/m3_run/06-yosys-synthesis/DELAY_0.abc 
+ABC: Error: The network is combinational.
+ABC: The cell areas are multiplied by the factor: <num_fanins> ^ (0.90).
+ABC: The cell delays are multiplied by the factor: <num_fanins> ^ (0.20).
+ABC: Cannot find the default PI driving cell (sky130_fd_sc_hd__inv_2/Y) in the library.
+ABC: WireLoad = "none"  Gates =  23929 (  2.1 %)   Cap = 12.7 ff (  0.9 %)   Area =   246084.77 ( 96.2 %)   Delay = 12204.04 ps  (  2.6 %)               
+ABC: Path  0 --      50 : 0  250 pi                         A =   0.00  Df =   0.0   -0.0 ps  S =   0.0 ps  Cin =  0.0 ff  Cout =1042.9 ff  Cmax =   0.0 ff  G =    0  
+ABC: Path  1 --    1525 : 2  106 sky130_fd_sc_hd__nand2b_2  A =   8.76  Df =1862.4 -449.0 ps  S =2591.4 ps  Cin =  3.0 ff  Cout = 495.0 ff  Cmax = 285.7 ff  G =16061  
+ABC: Path  2 --    1714 : 3   48 sky130_fd_sc_hd__o21ai_2   A =   8.76  Df =3751.2 -557.2 ps  S =2184.4 ps  Cin =  4.5 ff  Cout = 208.1 ff  Cmax = 139.2 ff  G = 4435  
+ABC: Path  3 --    6003 : 4    1 sky130_fd_sc_hd__o211ai_2  A =  12.51  Df =4033.1  -92.0 ps  S = 242.1 ps  Cin =  4.4 ff  Cout =   4.4 ff  Cmax = 133.7 ff  G =   99  
+ABC: Path  4 --    6004 : 4   21 sky130_fd_sc_hd__o211ai_2  A =  12.51  Df =4426.1  -87.8 ps  S = 842.6 ps  Cin =  4.4 ff  Cout =  73.1 ff  Cmax = 133.7 ff  G = 1628  
+ABC: Path  5 --    6006 : 3   22 sky130_fd_sc_hd__o21ai_2   A =   8.76  Df =4956.1 -149.7 ps  S = 945.0 ps  Cin =  4.5 ff  Cout =  86.9 ff  Cmax = 139.2 ff  G = 1787  
+ABC: Path  6 --    8277 : 4    6 sky130_fd_sc_hd__o22ai_2   A =  12.51  Df =5219.6   -6.8 ps  S = 319.4 ps  Cin =  4.3 ff  Cout =  21.8 ff  Cmax = 137.3 ff  G =  490  
+ABC: Path  7 --    8283 : 5   13 sky130_fd_sc_hd__o2111ai_2 A =  15.01  Df =5598.7 -101.4 ps  S = 598.0 ps  Cin =  4.3 ff  Cout =  45.8 ff  Cmax = 129.1 ff  G = 1016  
+ABC: Path  8 --   14583 : 4   22 sky130_fd_sc_hd__a22oi_2   A =  12.51  Df =6442.4 -451.6 ps  S = 909.3 ps  Cin =  4.3 ff  Cout =  75.0 ff  Cmax = 170.3 ff  G = 1661  
+ABC: Path  9 --   17355 : 2    3 sky130_fd_sc_hd__nand2_2   A =   6.26  Df =6568.3 -397.6 ps  S = 167.9 ps  Cin =  4.4 ff  Cout =   9.4 ff  Cmax = 295.7 ff  G =  203  
+ABC: Path 10 --   17356 : 4    6 sky130_fd_sc_hd__a22o_2    A =  10.01  Df =6877.1 -512.1 ps  S =  99.2 ps  Cin =  2.3 ff  Cout =  16.2 ff  Cmax = 301.2 ff  G =  669  
+ABC: Path 11 --   18187 : 3    4 sky130_fd_sc_hd__and3_2    A =   7.51  Df =7116.1 -161.4 ps  S = 107.7 ps  Cin =  1.5 ff  Cout =  16.6 ff  Cmax = 309.5 ff  G = 1057  
+ABC: Path 12 --   18192 : 4    5 sky130_fd_sc_hd__o211ai_2  A =  12.51  Df =7384.1 -167.7 ps  S = 295.0 ps  Cin =  4.4 ff  Cout =  20.3 ff  Cmax = 133.7 ff  G =  445  
+ABC: Path 13 --   18195 : 4    5 sky130_fd_sc_hd__o2bb2ai_2 A =  15.01  Df =7589.5  -68.7 ps  S = 246.3 ps  Cin =  4.6 ff  Cout =  17.6 ff  Cmax = 134.6 ff  G =  368  
+ABC: Path 14 --   18199 : 3    3 sky130_fd_sc_hd__o21ai_2   A =   8.76  Df =7698.9  -47.4 ps  S = 155.3 ps  Cin =  4.5 ff  Cout =   9.7 ff  Cmax = 139.2 ff  G =  199  
+ABC: Path 15 --   18209 : 4    5 sky130_fd_sc_hd__a22o_2    A =  10.01  Df =7960.4  -95.0 ps  S = 110.7 ps  Cin =  2.3 ff  Cout =  18.4 ff  Cmax = 301.2 ff  G =  753  
+ABC: Path 16 --   18829 : 3    1 sky130_fd_sc_hd__a21o_2    A =   8.76  Df =8172.0 -176.7 ps  S =  33.7 ps  Cin =  2.4 ff  Cout =   2.6 ff  Cmax = 309.5 ff  G =  102  
+ABC: Path 17 --   18831 : 3    2 sky130_fd_sc_hd__o21a_2    A =   8.76  Df =8364.6 -167.8 ps  S =  49.0 ps  Cin =  2.4 ff  Cout =   5.9 ff  Cmax = 294.8 ff  G =  242  
+ABC: Path 18 --   18935 : 3    2 sky130_fd_sc_hd__nand3_2   A =  10.01  Df =8435.7 -166.3 ps  S =  85.8 ps  Cin =  4.4 ff  Cout =   9.1 ff  Cmax = 260.0 ff  G =  198  
+ABC: Path 19 --   18937 : 4   10 sky130_fd_sc_hd__o2bb2ai_2 A =  15.01  Df =8646.9   -4.7 ps  S = 370.2 ps  Cin =  4.6 ff  Cout =  29.6 ff  Cmax = 134.6 ff  G =  620  
+ABC: Path 20 --   18947 : 5    3 sky130_fd_sc_hd__o2111ai_2 A =  15.01  Df =8867.6  -78.9 ps  S = 228.3 ps  Cin =  4.3 ff  Cout =  10.9 ff  Cmax = 129.1 ff  G =  238  
+ABC: Path 21 --   19574 : 3    1 sky130_fd_sc_hd__and3_2    A =   7.51  Df =9130.1  -90.0 ps  S =  55.2 ps  Cin =  1.5 ff  Cout =   5.0 ff  Cmax = 309.5 ff  G =  323  
+ABC: Path 22 --   19576 : 4    4 sky130_fd_sc_hd__o2bb2ai_2 A =  15.01  Df =9357.8 -225.5 ps  S = 232.3 ps  Cin =  4.6 ff  Cout =  16.5 ff  Cmax = 134.6 ff  G =  346  
+ABC: Path 23 --   19806 : 4    1 sky130_fd_sc_hd__a31o_2    A =   8.76  Df =9552.2  -38.4 ps  S =  48.3 ps  Cin =  2.4 ff  Cout =   4.4 ff  Cmax = 271.9 ff  G =  184  
+ABC: Path 24 --   20293 : 3    5 sky130_fd_sc_hd__nand3_2   A =  10.01  Df =9659.7  -18.2 ps  S = 118.6 ps  Cin =  4.4 ff  Cout =  18.1 ff  Cmax = 260.0 ff  G =  396  
+ABC: Path 25 --   20324 : 3    2 sky130_fd_sc_hd__a21o_2    A =   8.76  Df =9888.9  -93.2 ps  S =  58.6 ps  Cin =  2.4 ff  Cout =   9.0 ff  Cmax = 309.5 ff  G =  363  
+ABC: Path 26 --   20328 : 4    3 sky130_fd_sc_hd__nand4_2   A =  12.51  Df =10002.6  -16.6 ps  S = 148.2 ps  Cin =  4.4 ff  Cout =  10.9 ff  Cmax = 200.5 ff  G =  240  
+ABC: Path 27 --   20332 : 4    2 sky130_fd_sc_hd__or4bb_2   A =  12.51  Df =10633.3 -413.2 ps  S = 107.3 ps  Cin =  1.5 ff  Cout =   6.1 ff  Cmax = 312.2 ff  G =  394  
+ABC: Path 28 --   20336 : 3    4 sky130_fd_sc_hd__and3_2    A =   7.51  Df =10862.0 -257.2 ps  S =  96.4 ps  Cin =  1.5 ff  Cout =  14.3 ff  Cmax = 309.5 ff  G =  916  
+ABC: Path 29 --   20337 : 2    4 sky130_fd_sc_hd__nor2_2    A =   6.26  Df =11031.7 -180.3 ps  S = 188.9 ps  Cin =  4.4 ff  Cout =  15.2 ff  Cmax = 141.9 ff  G =  331  
+ABC: Path 30 --   20338 : 1    1 sky130_fd_sc_hd__inv_2     A =   3.75  Df =11078.2 -177.6 ps  S =  40.1 ps  Cin =  4.5 ff  Cout =   4.6 ff  Cmax = 331.4 ff  G =   96  
+ABC: Path 31 --   20348 : 5    5 sky130_fd_sc_hd__a221oi_2  A =  15.01  Df =11426.8 -375.5 ps  S = 439.5 ps  Cin =  4.5 ff  Cout =  19.2 ff  Cmax =  96.1 ff  G =  407  
+ABC: Path 32 --   21486 : 4    1 sky130_fd_sc_hd__a211o_2   A =  10.01  Df =11639.8 -221.7 ps  S =  53.0 ps  Cin =  2.4 ff  Cout =   4.6 ff  Cmax = 325.0 ff  G =  187  
+ABC: Path 33 --   21487 : 2    1 sky130_fd_sc_hd__nand2_2   A =   6.26  Df =11830.3 -143.3 ps  S =  44.4 ps  Cin =  4.4 ff  Cout =   4.5 ff  Cmax = 295.7 ff  G =   98  
+ABC: Path 34 --   21489 : 4    1 sky130_fd_sc_hd__a211oi_2  A =  12.51  Df =12204.0 -230.1 ps  S = 617.8 ps  Cin =  4.4 ff  Cout =  33.4 ff  Cmax =  88.8 ff  G =  767  
+ABC: Start-point = pi49 (\w_cnt [1]).  End-point = po296 ($auto$rtlil.cc:2739:MuxGate$81700).
+ABC: netlist                       : i/o =  491/  390  lat =    0  nd = 23929  edge =  82321  area =82116.60  delay =3999.46  lev = 46
+ABC: + write_blif /tmp/yosys-abc-oJdT7i/output.blif 
+
+143.1.2. Re-integrating ABC results.
+ABC RESULTS:   sky130_fd_sc_hd__and4bb_2 cells:        9
+ABC RESULTS:   sky130_fd_sc_hd__and3b_2 cells:       11
+ABC RESULTS:   sky130_fd_sc_hd__or4bb_2 cells:       12
+ABC RESULTS:   sky130_fd_sc_hd__a311oi_2 cells:       15
+ABC RESULTS:   sky130_fd_sc_hd__a41oi_2 cells:       33
+ABC RESULTS:   sky130_fd_sc_hd__nor3b_2 cells:       16
+ABC RESULTS:   sky130_fd_sc_hd__o41a_2 cells:       24
+ABC RESULTS:   sky130_fd_sc_hd__o311ai_2 cells:       43
+ABC RESULTS:   sky130_fd_sc_hd__o21ba_2 cells:        5
+ABC RESULTS:   sky130_fd_sc_hd__a32oi_2 cells:      118
+ABC RESULTS:   sky130_fd_sc_hd__o32ai_2 cells:       20
+ABC RESULTS:   sky130_fd_sc_hd__o32a_2 cells:      166
+ABC RESULTS:   sky130_fd_sc_hd__a311o_2 cells:       58
+ABC RESULTS:   sky130_fd_sc_hd__a2bb2oi_2 cells:      196
+ABC RESULTS:   sky130_fd_sc_hd__o21bai_2 cells:      157
+ABC RESULTS:   sky130_fd_sc_hd__a31oi_2 cells:      285
+ABC RESULTS:   sky130_fd_sc_hd__a32o_2 cells:      268
+ABC RESULTS:   sky130_fd_sc_hd__o221ai_2 cells:      353
+ABC RESULTS:   sky130_fd_sc_hd__nand3_2 cells:     2026
+ABC RESULTS:   sky130_fd_sc_hd__o2111ai_2 cells:      783
+ABC RESULTS:   sky130_fd_sc_hd__o2bb2ai_2 cells:      895
+ABC RESULTS:   sky130_fd_sc_hd__a2111o_2 cells:       16
+ABC RESULTS:   sky130_fd_sc_hd__a22oi_2 cells:      384
+ABC RESULTS:   sky130_fd_sc_hd__and2b_2 cells:       98
+ABC RESULTS:   sky130_fd_sc_hd__xor2_2 cells:       74
+ABC RESULTS:   sky130_fd_sc_hd__xnor2_2 cells:       94
+ABC RESULTS:   sky130_fd_sc_hd__a2bb2o_2 cells:      124
+ABC RESULTS:   sky130_fd_sc_hd__inv_2 cells:      495
+ABC RESULTS:   sky130_fd_sc_hd__and2_2 cells:      160
+ABC RESULTS:   sky130_fd_sc_hd__a22o_2 cells:      435
+ABC RESULTS:   sky130_fd_sc_hd__o2bb2a_2 cells:      130
+ABC RESULTS:   sky130_fd_sc_hd__mux4_2 cells:       10
+ABC RESULTS:   sky130_fd_sc_hd__o31a_2 cells:      281
+ABC RESULTS:   sky130_fd_sc_hd__o41ai_2 cells:       15
+ABC RESULTS:   sky130_fd_sc_hd__nand3b_2 cells:      283
+ABC RESULTS:   sky130_fd_sc_hd__or4b_2 cells:       23
+ABC RESULTS:   sky130_fd_sc_hd__a2111oi_2 cells:        7
+ABC RESULTS:   sky130_fd_sc_hd__nand4_2 cells:      864
+ABC RESULTS:   sky130_fd_sc_hd__o31ai_2 cells:       42
+ABC RESULTS:   sky130_fd_sc_hd__o311a_2 cells:      313
+ABC RESULTS:   sky130_fd_sc_hd__a41o_2 cells:       46
+ABC RESULTS:   sky130_fd_sc_hd__o2111a_2 cells:      161
+ABC RESULTS:   sky130_fd_sc_hd__nand4b_2 cells:       27
+ABC RESULTS:   sky130_fd_sc_hd__o22ai_2 cells:      643
+ABC RESULTS:   sky130_fd_sc_hd__a21o_2 cells:      937
+ABC RESULTS:   sky130_fd_sc_hd__nand2_2 cells:     1639
+ABC RESULTS:   sky130_fd_sc_hd__o21a_2 cells:      362
+ABC RESULTS:   sky130_fd_sc_hd__a221oi_2 cells:       50
+ABC RESULTS:   sky130_fd_sc_hd__a21boi_2 cells:      196
+ABC RESULTS:   sky130_fd_sc_hd__o211ai_2 cells:     2049
+ABC RESULTS:   sky130_fd_sc_hd__or2_2 cells:      161
+ABC RESULTS:   sky130_fd_sc_hd__a221o_2 cells:       83
+ABC RESULTS:   sky130_fd_sc_hd__a31o_2 cells:      685
+ABC RESULTS:   sky130_fd_sc_hd__nor2_2 cells:      560
+ABC RESULTS:   sky130_fd_sc_hd__o21ai_2 cells:     1737
+ABC RESULTS:   sky130_fd_sc_hd__o221a_2 cells:      260
+ABC RESULTS:   sky130_fd_sc_hd__a211o_2 cells:      162
+ABC RESULTS:   sky130_fd_sc_hd__a211oi_2 cells:      102
+ABC RESULTS:   sky130_fd_sc_hd__o211a_2 cells:      743
+ABC RESULTS:   sky130_fd_sc_hd__a21bo_2 cells:       97
+ABC RESULTS:   sky130_fd_sc_hd__nand2b_2 cells:      149
+ABC RESULTS:   sky130_fd_sc_hd__a21oi_2 cells:     1625
+ABC RESULTS:   sky130_fd_sc_hd__or3b_2 cells:       46
+ABC RESULTS:   sky130_fd_sc_hd__nor3_2 cells:       72
+ABC RESULTS:   sky130_fd_sc_hd__or3_2 cells:       81
+ABC RESULTS:   sky130_fd_sc_hd__nor4_2 cells:       13
+ABC RESULTS:   sky130_fd_sc_hd__or4_2 cells:      121
+ABC RESULTS:   sky130_fd_sc_hd__o22a_2 cells:      314
+ABC RESULTS:   sky130_fd_sc_hd__and3_2 cells:      980
+ABC RESULTS:   sky130_fd_sc_hd__and4b_2 cells:       30
+ABC RESULTS:   sky130_fd_sc_hd__and4_2 cells:      196
+ABC RESULTS:   sky130_fd_sc_hd__mux2_1 cells:      261
+ABC RESULTS:        internal signals:    15257
+ABC RESULTS:           input signals:      491
+ABC RESULTS:          output signals:      390
+Removing temp directory.
+
+144. Executing SETUNDEF pass (replace undef values with defined constants).
+
+145. Executing HILOMAP pass (mapping to constant drivers).
+
+146. Executing SPLITNETS pass (splitting up multi-bit signals).
+
+147. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \conv2d_top..
+Removed 27 unused cells and 16324 unused wires.
+<suppressed ~57 debug messages>
+
+148. Executing INSBUF pass (insert buffer cells for connected wires).
+Add conv2d_top/$auto$insbuf.cc:97:execute$105905: \s_axil_rdata [31] -> \s_axil_rdata [7]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105906: \s_axil_rdata [29] -> \s_axil_rdata [8]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105907: \s_axil_rdata [31] -> \s_axil_rdata [9]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105908: \s_axil_rdata [31] -> \s_axil_rdata [10]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105909: \s_axil_rdata [31] -> \s_axil_rdata [11]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105910: \s_axil_rdata [31] -> \s_axil_rdata [12]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105911: \s_axil_rdata [31] -> \s_axil_rdata [13]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105912: \s_axil_rdata [29] -> \s_axil_rdata [14]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105913: \s_axil_rdata [31] -> \s_axil_rdata [15]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105914: \s_axil_rdata [31] -> \s_axil_rdata [16]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105915: \s_axil_rdata [29] -> \s_axil_rdata [17]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105916: \s_axil_rdata [31] -> \s_axil_rdata [18]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105917: \s_axil_rdata [31] -> \s_axil_rdata [19]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105918: \s_axil_rdata [29] -> \s_axil_rdata [20]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105919: \s_axil_rdata [31] -> \s_axil_rdata [21]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105920: \s_axil_rdata [29] -> \s_axil_rdata [22]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105921: \s_axil_rdata [31] -> \s_axil_rdata [23]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105922: \s_axil_rdata [29] -> \s_axil_rdata [24]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105923: \s_axil_rdata [31] -> \s_axil_rdata [25]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105924: \s_axil_rdata [31] -> \s_axil_rdata [26]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105925: \s_axil_rdata [31] -> \s_axil_rdata [27]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105926: \s_axil_rdata [31] -> \s_axil_rdata [28]
+Add conv2d_top/$auto$insbuf.cc:97:execute$105927: \s_axil_rdata [31] -> \s_axil_rdata [30]
+
+149. Executing CHECK pass (checking for obvious problems).
+Checking module conv2d_top...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.46 (git sha1 e97731b9dda91fa5fa53ed87df7c34163ba59a41, clang++ 17.0.6 -fPIC -O3)",
+   "invocation": "stat -json -liberty /work/runs/m3_run/tmp/9488b31851cd4829b57c767078510c8d.lib ",
+   "modules": {
+      "\\conv2d_top": {
+         "num_wires":         24324,
+         "num_wire_bits":     24453,
+         "num_pub_wires":     393,
+         "num_pub_wire_bits": 522,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         24346,
+         "area":              254510.345600,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__a2111o_2": 16,
+            "sky130_fd_sc_hd__a2111oi_2": 7,
+            "sky130_fd_sc_hd__a211o_2": 162,
+            "sky130_fd_sc_hd__a211oi_2": 102,
+            "sky130_fd_sc_hd__a21bo_2": 97,
+            "sky130_fd_sc_hd__a21boi_2": 196,
+            "sky130_fd_sc_hd__a21o_2": 937,
+            "sky130_fd_sc_hd__a21oi_2": 1625,
+            "sky130_fd_sc_hd__a221o_2": 83,
+            "sky130_fd_sc_hd__a221oi_2": 50,
+            "sky130_fd_sc_hd__a22o_2": 435,
+            "sky130_fd_sc_hd__a22oi_2": 384,
+            "sky130_fd_sc_hd__a2bb2o_2": 124,
+            "sky130_fd_sc_hd__a2bb2oi_2": 196,
+            "sky130_fd_sc_hd__a311o_2": 58,
+            "sky130_fd_sc_hd__a311oi_2": 15,
+            "sky130_fd_sc_hd__a31o_2": 685,
+            "sky130_fd_sc_hd__a31oi_2": 285,
+            "sky130_fd_sc_hd__a32o_2": 268,
+            "sky130_fd_sc_hd__a32oi_2": 118,
+            "sky130_fd_sc_hd__a41o_2": 46,
+            "sky130_fd_sc_hd__a41oi_2": 33,
+            "sky130_fd_sc_hd__and2_2": 160,
+            "sky130_fd_sc_hd__and2b_2": 98,
+            "sky130_fd_sc_hd__and3_2": 980,
+            "sky130_fd_sc_hd__and3b_2": 11,
+            "sky130_fd_sc_hd__and4_2": 196,
+            "sky130_fd_sc_hd__and4b_2": 30,
+            "sky130_fd_sc_hd__and4bb_2": 9,
+            "sky130_fd_sc_hd__buf_2": 23,
+            "sky130_fd_sc_hd__conb_1": 4,
+            "sky130_fd_sc_hd__dfxtp_2": 390,
+            "sky130_fd_sc_hd__inv_2": 495,
+            "sky130_fd_sc_hd__mux2_1": 261,
+            "sky130_fd_sc_hd__mux4_2": 10,
+            "sky130_fd_sc_hd__nand2_2": 1639,
+            "sky130_fd_sc_hd__nand2b_2": 149,
+            "sky130_fd_sc_hd__nand3_2": 2026,
+            "sky130_fd_sc_hd__nand3b_2": 283,
+            "sky130_fd_sc_hd__nand4_2": 864,
+            "sky130_fd_sc_hd__nand4b_2": 27,
+            "sky130_fd_sc_hd__nor2_2": 560,
+            "sky130_fd_sc_hd__nor3_2": 72,
+            "sky130_fd_sc_hd__nor3b_2": 16,
+            "sky130_fd_sc_hd__nor4_2": 13,
+            "sky130_fd_sc_hd__o2111a_2": 161,
+            "sky130_fd_sc_hd__o2111ai_2": 783,
+            "sky130_fd_sc_hd__o211a_2": 743,
+            "sky130_fd_sc_hd__o211ai_2": 2049,
+            "sky130_fd_sc_hd__o21a_2": 362,
+            "sky130_fd_sc_hd__o21ai_2": 1737,
+            "sky130_fd_sc_hd__o21ba_2": 5,
+            "sky130_fd_sc_hd__o21bai_2": 157,
+            "sky130_fd_sc_hd__o221a_2": 260,
+            "sky130_fd_sc_hd__o221ai_2": 353,
+            "sky130_fd_sc_hd__o22a_2": 314,
+            "sky130_fd_sc_hd__o22ai_2": 643,
+            "sky130_fd_sc_hd__o2bb2a_2": 130,
+            "sky130_fd_sc_hd__o2bb2ai_2": 895,
+            "sky130_fd_sc_hd__o311a_2": 313,
+            "sky130_fd_sc_hd__o311ai_2": 43,
+            "sky130_fd_sc_hd__o31a_2": 281,
+            "sky130_fd_sc_hd__o31ai_2": 42,
+            "sky130_fd_sc_hd__o32a_2": 166,
+            "sky130_fd_sc_hd__o32ai_2": 20,
+            "sky130_fd_sc_hd__o41a_2": 24,
+            "sky130_fd_sc_hd__o41ai_2": 15,
+            "sky130_fd_sc_hd__or2_2": 161,
+            "sky130_fd_sc_hd__or3_2": 81,
+            "sky130_fd_sc_hd__or3b_2": 46,
+            "sky130_fd_sc_hd__or4_2": 121,
+            "sky130_fd_sc_hd__or4b_2": 23,
+            "sky130_fd_sc_hd__or4bb_2": 12,
+            "sky130_fd_sc_hd__xnor2_2": 94,
+            "sky130_fd_sc_hd__xor2_2": 74
+         }
+      }
+   },
+      "design": {
+         "num_wires":         24324,
+         "num_wire_bits":     24453,
+         "num_pub_wires":     393,
+         "num_pub_wire_bits": 522,
+         "num_ports":         21,
+         "num_port_bits":     150,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         24346,
+         "area":              254510.345600,
+         "num_cells_by_type": {
+            "sky130_fd_sc_hd__a2111o_2": 16,
+            "sky130_fd_sc_hd__a2111oi_2": 7,
+            "sky130_fd_sc_hd__a211o_2": 162,
+            "sky130_fd_sc_hd__a211oi_2": 102,
+            "sky130_fd_sc_hd__a21bo_2": 97,
+            "sky130_fd_sc_hd__a21boi_2": 196,
+            "sky130_fd_sc_hd__a21o_2": 937,
+            "sky130_fd_sc_hd__a21oi_2": 1625,
+            "sky130_fd_sc_hd__a221o_2": 83,
+            "sky130_fd_sc_hd__a221oi_2": 50,
+            "sky130_fd_sc_hd__a22o_2": 435,
+            "sky130_fd_sc_hd__a22oi_2": 384,
+            "sky130_fd_sc_hd__a2bb2o_2": 124,
+            "sky130_fd_sc_hd__a2bb2oi_2": 196,
+            "sky130_fd_sc_hd__a311o_2": 58,
+            "sky130_fd_sc_hd__a311oi_2": 15,
+            "sky130_fd_sc_hd__a31o_2": 685,
+            "sky130_fd_sc_hd__a31oi_2": 285,
+            "sky130_fd_sc_hd__a32o_2": 268,
+            "sky130_fd_sc_hd__a32oi_2": 118,
+            "sky130_fd_sc_hd__a41o_2": 46,
+            "sky130_fd_sc_hd__a41oi_2": 33,
+            "sky130_fd_sc_hd__and2_2": 160,
+            "sky130_fd_sc_hd__and2b_2": 98,
+            "sky130_fd_sc_hd__and3_2": 980,
+            "sky130_fd_sc_hd__and3b_2": 11,
+            "sky130_fd_sc_hd__and4_2": 196,
+            "sky130_fd_sc_hd__and4b_2": 30,
+            "sky130_fd_sc_hd__and4bb_2": 9,
+            "sky130_fd_sc_hd__buf_2": 23,
+            "sky130_fd_sc_hd__conb_1": 4,
+            "sky130_fd_sc_hd__dfxtp_2": 390,
+            "sky130_fd_sc_hd__inv_2": 495,
+            "sky130_fd_sc_hd__mux2_1": 261,
+            "sky130_fd_sc_hd__mux4_2": 10,
+            "sky130_fd_sc_hd__nand2_2": 1639,
+            "sky130_fd_sc_hd__nand2b_2": 149,
+            "sky130_fd_sc_hd__nand3_2": 2026,
+            "sky130_fd_sc_hd__nand3b_2": 283,
+            "sky130_fd_sc_hd__nand4_2": 864,
+            "sky130_fd_sc_hd__nand4b_2": 27,
+            "sky130_fd_sc_hd__nor2_2": 560,
+            "sky130_fd_sc_hd__nor3_2": 72,
+            "sky130_fd_sc_hd__nor3b_2": 16,
+            "sky130_fd_sc_hd__nor4_2": 13,
+            "sky130_fd_sc_hd__o2111a_2": 161,
+            "sky130_fd_sc_hd__o2111ai_2": 783,
+            "sky130_fd_sc_hd__o211a_2": 743,
+            "sky130_fd_sc_hd__o211ai_2": 2049,
+            "sky130_fd_sc_hd__o21a_2": 362,
+            "sky130_fd_sc_hd__o21ai_2": 1737,
+            "sky130_fd_sc_hd__o21ba_2": 5,
+            "sky130_fd_sc_hd__o21bai_2": 157,
+            "sky130_fd_sc_hd__o221a_2": 260,
+            "sky130_fd_sc_hd__o221ai_2": 353,
+            "sky130_fd_sc_hd__o22a_2": 314,
+            "sky130_fd_sc_hd__o22ai_2": 643,
+            "sky130_fd_sc_hd__o2bb2a_2": 130,
+            "sky130_fd_sc_hd__o2bb2ai_2": 895,
+            "sky130_fd_sc_hd__o311a_2": 313,
+            "sky130_fd_sc_hd__o311ai_2": 43,
+            "sky130_fd_sc_hd__o31a_2": 281,
+            "sky130_fd_sc_hd__o31ai_2": 42,
+            "sky130_fd_sc_hd__o32a_2": 166,
+            "sky130_fd_sc_hd__o32ai_2": 20,
+            "sky130_fd_sc_hd__o41a_2": 24,
+            "sky130_fd_sc_hd__o41ai_2": 15,
+            "sky130_fd_sc_hd__or2_2": 161,
+            "sky130_fd_sc_hd__or3_2": 81,
+            "sky130_fd_sc_hd__or3b_2": 46,
+            "sky130_fd_sc_hd__or4_2": 121,
+            "sky130_fd_sc_hd__or4b_2": 23,
+            "sky130_fd_sc_hd__or4bb_2": 12,
+            "sky130_fd_sc_hd__xnor2_2": 94,
+            "sky130_fd_sc_hd__xor2_2": 74
+         }
+      }
+}
+
+150. Printing statistics.
+
+=== conv2d_top ===
+
+   Number of wires:              24324
+   Number of wire bits:          24453
+   Number of public wires:         393
+   Number of public wire bits:     522
+   Number of ports:                 21
+   Number of port bits:            150
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              24346
+     sky130_fd_sc_hd__a2111o_2      16
+     sky130_fd_sc_hd__a2111oi_2      7
+     sky130_fd_sc_hd__a211o_2      162
+     sky130_fd_sc_hd__a211oi_2     102
+     sky130_fd_sc_hd__a21bo_2       97
+     sky130_fd_sc_hd__a21boi_2     196
+     sky130_fd_sc_hd__a21o_2       937
+     sky130_fd_sc_hd__a21oi_2     1625
+     sky130_fd_sc_hd__a221o_2       83
+     sky130_fd_sc_hd__a221oi_2      50
+     sky130_fd_sc_hd__a22o_2       435
+     sky130_fd_sc_hd__a22oi_2      384
+     sky130_fd_sc_hd__a2bb2o_2     124
+     sky130_fd_sc_hd__a2bb2oi_2    196
+     sky130_fd_sc_hd__a311o_2       58
+     sky130_fd_sc_hd__a311oi_2      15
+     sky130_fd_sc_hd__a31o_2       685
+     sky130_fd_sc_hd__a31oi_2      285
+     sky130_fd_sc_hd__a32o_2       268
+     sky130_fd_sc_hd__a32oi_2      118
+     sky130_fd_sc_hd__a41o_2        46
+     sky130_fd_sc_hd__a41oi_2       33
+     sky130_fd_sc_hd__and2_2       160
+     sky130_fd_sc_hd__and2b_2       98
+     sky130_fd_sc_hd__and3_2       980
+     sky130_fd_sc_hd__and3b_2       11
+     sky130_fd_sc_hd__and4_2       196
+     sky130_fd_sc_hd__and4b_2       30
+     sky130_fd_sc_hd__and4bb_2       9
+     sky130_fd_sc_hd__buf_2         23
+     sky130_fd_sc_hd__conb_1         4
+     sky130_fd_sc_hd__dfxtp_2      390
+     sky130_fd_sc_hd__inv_2        495
+     sky130_fd_sc_hd__mux2_1       261
+     sky130_fd_sc_hd__mux4_2        10
+     sky130_fd_sc_hd__nand2_2     1639
+     sky130_fd_sc_hd__nand2b_2     149
+     sky130_fd_sc_hd__nand3_2     2026
+     sky130_fd_sc_hd__nand3b_2     283
+     sky130_fd_sc_hd__nand4_2      864
+     sky130_fd_sc_hd__nand4b_2      27
+     sky130_fd_sc_hd__nor2_2       560
+     sky130_fd_sc_hd__nor3_2        72
+     sky130_fd_sc_hd__nor3b_2       16
+     sky130_fd_sc_hd__nor4_2        13
+     sky130_fd_sc_hd__o2111a_2     161
+     sky130_fd_sc_hd__o2111ai_2    783
+     sky130_fd_sc_hd__o211a_2      743
+     sky130_fd_sc_hd__o211ai_2    2049
+     sky130_fd_sc_hd__o21a_2       362
+     sky130_fd_sc_hd__o21ai_2     1737
+     sky130_fd_sc_hd__o21ba_2        5
+     sky130_fd_sc_hd__o21bai_2     157
+     sky130_fd_sc_hd__o221a_2      260
+     sky130_fd_sc_hd__o221ai_2     353
+     sky130_fd_sc_hd__o22a_2       314
+     sky130_fd_sc_hd__o22ai_2      643
+     sky130_fd_sc_hd__o2bb2a_2     130
+     sky130_fd_sc_hd__o2bb2ai_2    895
+     sky130_fd_sc_hd__o311a_2      313
+     sky130_fd_sc_hd__o311ai_2      43
+     sky130_fd_sc_hd__o31a_2       281
+     sky130_fd_sc_hd__o31ai_2       42
+     sky130_fd_sc_hd__o32a_2       166
+     sky130_fd_sc_hd__o32ai_2       20
+     sky130_fd_sc_hd__o41a_2        24
+     sky130_fd_sc_hd__o41ai_2       15
+     sky130_fd_sc_hd__or2_2        161
+     sky130_fd_sc_hd__or3_2         81
+     sky130_fd_sc_hd__or3b_2        46
+     sky130_fd_sc_hd__or4_2        121
+     sky130_fd_sc_hd__or4b_2        23
+     sky130_fd_sc_hd__or4bb_2       12
+     sky130_fd_sc_hd__xnor2_2       94
+     sky130_fd_sc_hd__xor2_2        74
+
+   Chip area for module '\conv2d_top': 254510.345600
+     of which used for sequential elements: 8295.456000 (3.26%)
+
+151. Executing Verilog backend.
+Dumping module `\conv2d_top'.
+
+152. Executing JSON backend.
