@@ -1,0 +1,1 @@
+yosys -y /nix/store/r03b2vkxjqwgkkffyahfysb2fs40baai-python3-3.11.9-env/lib/python3.11/site-packages/openlane/scripts/pyosys/json_header.py -- --config-in /work/runs/m3_run/05-yosys-jsonheader/config.json --extra-in /work/runs/m3_run/05-yosys-jsonheader/extra.json --output /work/runs/m3_run/05-yosys-jsonheader/conv2d_top.h.json
