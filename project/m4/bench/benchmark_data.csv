@@ -1,0 +1,20 @@
+metric,sw_baseline,hw_accelerator,unit,notes
+platform,Google Colab CPU,SKY130 ASIC,,
+clock_freq_MHz,2200,100,MHz,SW=Xeon HW=synthesis achieved nom_tt corner
+execution_time_ms,129.21,0.216,ms,HW is projected
+throughput_gflops,0.003009,1.800,GFLOP/s,HW is projected
+samples_per_sec,7.74,4505,samples/s,HW is projected
+total_flops,388800,388800,FLOPs,same workload
+power_W,85,0.004042,W,SW=TDP HW=synthesis post-PnR
+energy_efficiency,0.0000354,445.3,GFLOP/s/W,HW is projected
+speedup_throughput,1,598.2,x,relative to SW baseline
+speedup_time,1,581.6,x,relative to SW baseline
+cell_count,N/A,10305,cells,M4 synthesis
+area_um2,N/A,109464,um2,M4 synthesis
+setup_wns_nom_tt_ns,N/A,0.0,ns,timing MET no violation
+setup_violations_ss,N/A,yes,,ss corner only worst case process
+drc_errors,N/A,0,,clean
+lvs_errors,N/A,0,,clean
+internal_power_W,N/A,0.002871,W,M4 synthesis
+switching_power_W,N/A,0.001171,W,M4 synthesis
+leakage_power_W,N/A,0.0000000954,W,M4 synthesis
