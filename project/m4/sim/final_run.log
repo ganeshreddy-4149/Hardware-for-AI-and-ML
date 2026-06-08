@@ -1,0 +1,12 @@
+VCD info: dumpfile final_waveform.vcd opened for output.
+[TB] HOST WRITE: scale_shift=0 via AXI
+[TB] HOST WRITE: activations via AXI
+[TB] HOST WRITE: weights via AXI
+[TB] HOST WRITE: bias=0 via AXI
+[TB] HOST WRITE: start=1 via AXI
+[TB] COMPUTE: waiting for done
+[TB] HOST READ: result via AXI addr 0x400
+[TB] Expected output[0,0] = -6
+[TB] Actual   output[0,0] = -6
+PASS: INT8 Conv2D output matches expected value -6
+[TB] HOST WRITE: start=0, returning to IDLE
