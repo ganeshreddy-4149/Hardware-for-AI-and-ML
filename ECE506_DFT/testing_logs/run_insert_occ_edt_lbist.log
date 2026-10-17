@@ -1,0 +1,584 @@
+/pkgs/mentor/tessent/tessent_2026.1-p1/bin/tessent -shell -log logfiles/./run_insert_occ_edt_lbist.log -replace -dofile ./run_insert_occ_edt_lbist
+//  Tessent Shell  2026.1-p1    Fri Apr 10 21:17:56 GMT 2026
+//                Unpublished work. Copyright 2026 Siemens
+//
+//      This material contains trade secrets or otherwise confidential 
+//  information owned by Siemens Industry Software Inc. or its affiliates 
+//   (collectively, "SISW"), or its licensors. Access to and use of this 
+//     information is strictly limited as set forth in the Customer's 
+//                   applicable agreements with SISW. 
+//
+//  Siemens software executing under x86-64 Linux on Fri Oct 16 19:10:52 PDT 2026.
+//  64 bit version
+//  Host: deimos.ece.pdx.edu (32 x 2.5 GHz, 63781 MB RAM, 10239 MB Swap)
+//
+//  Warning: Tessent user documentation configuration file /pkgs/mentor/tessent/tessent_2026.1-p1/disw_doc.config could not be open.
+//  command: #! /bin/sh -f
+//  command: # exec tessent -shell -log logfiles/$0.log -replace -dofile "$0"
+//  command: # Set the context to insert DFT into RTL-level design
+//  command: # Define a new design ID
+//  command: set_context dft -rtl -design_id rtl2
+//  command: # Set the location of the TSDB. Default is the current working directory.
+//  command: set_tsdb_output_directory ../tsdb_outdir
+//  command: # No need to read in the design using read_verilog. It can be read directly from the TSDB.
+//  command: read_design cpu_top -design_id rtl1
+//  command: # Read the cell library
+//  command: read_cell_library ../library/standard_cells/tessent/adk.tcelllib
+//  Reading DFT Library file ../library/standard_cells/tessent/adk.tcelllib
+//  Finished reading file ../library/standard_cells/tessent/adk.tcelllib
+//  command: read_cell_library ../library/memories/picdram.tcelllib
+//  Reading DFT Library file ../library/memories/picdram.tcelllib
+//  Finished reading file ../library/memories/picdram.tcelllib
+//  command: set_current_design cpu_top
+//  ---------------------------------------------------------------------------
+//  Begin ICL elaboration and checking.
+//  -----------------------------------
+//  ICL elaboration completed, CPU time=0.07 sec.
+//  ---------------------------------------------------------------------------
+//  command: # The design level is already specified in first pass and no need to specify it again
+//  command: # Add DFT Signals
+//  command: # DFT Signal used for logic test
+//  command: add_dft_signals ltest_en
+//  command: # When design_level is chip, the source node needs to exist in the design and the tool cannot create it as a port
+//  command: # Reusing pdata_p[1], pdata_p[0], enable_p as scan_en, edt_update and test_clock
+//  command: add_dft_signals scan_en edt_update test_clock -source_node { pdata_p[1]  pdata_p[0] enable_p }
+//  Note: Inferred 'add_dft_control_points cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/pdata_p_1_AuxInEn -dft_signal_source_name ltest_en' 
+//        because the DFT signal 'scan_en' is sourced by an auxiliary data input pin.
+//  Note: Inferred 'add_dft_control_points cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/pdata_p_0_AuxInEn -dft_signal_source_name ltest_en' 
+//        because the DFT signal 'edt_update' is sourced by an auxiliary data input pin.
+//  Note: Inferred 'add_dft_control_points cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/enable_p_AuxInEn -dft_signal_source_name ltest_en' 
+//        because the DFT signal 'test_clock' is sourced by an auxiliary data input pin.
+//  command: # Create shift_capture_clock and edt_clock as gated versions of test_clock
+//  command: add_dft_signals shift_capture_clock edt_clock -create_from_other_signals
+//  command: # DFT Signal used by top-level EDT
+//  command: add_dft_signals edt_mode
+//  command: # DFT Signal used for BoundaryScan to be used with logic test without contacting inputs
+//  command: add_dft_signals int_ltest_en output_pad_disable
+//  Note: Adding Dft signal 'all_test' to control insertion multiplexers that may be needed by future add_dft_control 
+//        -dft_signal_source_name {output_pad_disable} commands.
+//  command: # DFT Signal used for Scan Tested Instruments like memorybist/boundary scan
+//  command: add_dft_signals tck_occ_en
+//  command: # DFT Signal used to bypass memories or to run multi-load ATPG for memories
+//  command: add_dft_signals memory_bypass_en
+//  command: #### DFT signals for HTKLB
+//  command: add_dft_signals control_test_point_en observe_test_point_en x_bounding_en
+//  command: # Use ltest_en to connect to AuxEn of the EDT Channel in/out pins
+//  command: add_dft_control_points [get_auxiliary_pins portain_p[0] -enable -direction input] -dft_signal_source_name ltest_en
+//  command: add_dft_control_points [get_auxiliary_pins portain_p[1] -enable -direction input] -dft_signal_source_name ltest_en
+//  command: add_dft_control_points [get_auxiliary_pins portain_p[2] -enable -direction input] -dft_signal_source_name ltest_en
+//  command: add_dft_control_points [get_auxiliary_pins portbout_p[0] -enable -direction output] -dft_signal_source_name ltest_en
+//  command: add_dft_control_points [get_auxiliary_pins portbout_p[1] -enable -direction output] -dft_signal_source_name ltest_en
+//  command: add_dft_control_points [get_auxiliary_pins portbout_p[2] -enable -direction output] -dft_signal_source_name ltest_en
+//  command: # Specify pre-DFT DRC rules
+//  command: set_dft_specification_requirements -logic_test on
+//  command: add_clocks clk1_p -period 5ns
+//  command: add_clocks clk2_p -period 6ns
+//  command: add_clocks clk3_p -period 5ns
+//  command: add_clocks clk4_p -period 6ns
+//  command: # add the MBIST mini-OCC for LBIST test
+//  command: add_core_instances -instances [get_instances *_tessent_sib_sti_inst]
+//  Added core instance 'cpu_top_rtl1_tessent_sib_sti_inst'.
+//  command: check_design_rules 
+//  ---------------------------------------------------------------------------
+//  Begin RTL synthesis.
+//  --------------------
+//  Synthesized modules=32, Time=2.12 sec.
+//  ---------------------------------------------------------------------------
+//  Warning: Rule FN4 violation occurs 44 times
+//  Flattening process completed, cell instances=58916, gates=92760, PIs=39+2(pseudo ports), POs=88, CPU time=0.60 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.17 sec.
+//  Begin simulation of auto-generated load_unload procedure.
+//  Simulation of load_unload procedure completed, CPU time=0.0 sec.
+//  Scan segment = /cpu_top_rtl1_tessent_bscan_interface_I/ltest_so successfully traced with scan_cells = 7.
+//  Scan segment = /cpu_top_rtl1_tessent_sib_sti_inst/ltest_so successfully traced with scan_cells = 7.
+//  14 scan cells have been identified in 2 scan segments.
+//  Longest scan segment has 7 scan cells.
+//  3 edge-triggered clock ports set to stable high. (D7)
+//  Warning: There were 124 occurrences of uncontrolled RAMs during test procedures. (A6)
+//  ---------------------------------------------------------------------------
+//  Begin transparent latch checking for 166 latches.
+//  ---------------------------------------------------------------------------
+//  32 latches not transparent due to uncontrollable. (D6)
+//  1 latches not transparent due to unobservable. (D6)
+//  Number transparent latches = 133.
+//  62 gates may have an observable X-state. (E5)
+//  command: # Create and report a DFT Specification
+//  command: # Empty DFT specification for OCC and EDT are created here and populated later in this dofile
+//  command: set spec [create_dft_specification -sri_sib_list {occ edt lbist} ]
+//  sub-command: create_dft_specification -sri_sib_list "occ edt lbist" 
+//  
+//  Begin creation of DftSpecification(cpu_top,rtl2)
+//    Creation of RtlCells wrapper
+//    Creation of IjtagNetwork wrapper
+//  
+//  Done  creation of DftSpecification(cpu_top,rtl2)
+//  
+//  command: report_config_data $spec
+
+DftSpecification(cpu_top,rtl2) {
+  IjtagNetwork {
+    HostScanInterface(sti_client) {
+      Interface {
+        design_instance : cpu_top_rtl1_tessent_sib_sti_inst;
+        scan_interface : client;
+      }
+      Sib(sri) {
+        Attributes {
+          tessent_dft_function : scan_resource_instrument_host;
+        }
+        Sib(sri_ctrl) {
+          Tdr(sri_ctrl) {
+            Attributes {
+              tessent_dft_function : scan_resource_instrument_dft_control;
+            }
+          }
+        }
+        Sib(occ) {
+        }
+        Sib(edt) {
+        }
+        Sib(lbist) {
+        }
+      }
+    }
+  }
+}
+//  command: read_config_data -in $spec -from_string {
+  OCC {
+    ijtag_host_interface : Sib(occ);
+  }
+}
+//  command: # Below is a generic way to populate the OCC. The clock list is design-specific and needs to be updated for the design
+//  command: # The scan_enable and shift_capture_clock signals are automatically connected to OCC instances
+//  command: # Modify the below list for your specific design requirements
+//  command: set id_clk_list [list    clk1 clk1_p    clk2 clk2_p    clk3 clk3_p    clk4 clk4_p    ramclk_p ramclk_p  ]
+//  command: foreach {id clk} $id_clk_list {
+//             set occ [add_config_element OCC/Controller($id) -in $spec]
+//             set_config_value clock_intercept_node -in $occ $clk
+//           }
+//  sub-command: add_config_element OCC/Controller(clk1) -in /DftSpecification(cpu_top,rtl2) 
+//  sub-command: set_config_value clock_intercept_node -in {/DftSpecification(cpu_top,rtl2)/OCC/Controller(clk1)} clk1_p 
+//  sub-command: add_config_element OCC/Controller(clk2) -in /DftSpecification(cpu_top,rtl2) 
+//  sub-command: set_config_value clock_intercept_node -in {/DftSpecification(cpu_top,rtl2)/OCC/Controller(clk2)} clk2_p 
+//  sub-command: add_config_element OCC/Controller(clk3) -in /DftSpecification(cpu_top,rtl2) 
+//  sub-command: set_config_value clock_intercept_node -in {/DftSpecification(cpu_top,rtl2)/OCC/Controller(clk3)} clk3_p 
+//  sub-command: add_config_element OCC/Controller(clk4) -in /DftSpecification(cpu_top,rtl2) 
+//  sub-command: set_config_value clock_intercept_node -in {/DftSpecification(cpu_top,rtl2)/OCC/Controller(clk4)} clk4_p 
+//  sub-command: add_config_element OCC/Controller(ramclk_p) -in /DftSpecification(cpu_top,rtl2) 
+//  sub-command: set_config_value clock_intercept_node -in {/DftSpecification(cpu_top,rtl2)/OCC/Controller(ramclk_p)} ramclk_p 
+//  command: report_config_data $spec
+
+DftSpecification(cpu_top,rtl2) {
+  IjtagNetwork {
+    HostScanInterface(sti_client) {
+      Interface {
+        design_instance : cpu_top_rtl1_tessent_sib_sti_inst;
+        scan_interface : client;
+      }
+      Sib(sri) {
+        Attributes {
+          tessent_dft_function : scan_resource_instrument_host;
+        }
+        Sib(sri_ctrl) {
+          Tdr(sri_ctrl) {
+            Attributes {
+              tessent_dft_function : scan_resource_instrument_dft_control;
+            }
+          }
+        }
+        Sib(occ) {
+        }
+        Sib(edt) {
+        }
+        Sib(lbist) {
+        }
+      }
+    }
+  }
+  OCC {
+    ijtag_host_interface : Sib(occ);
+    Controller(clk1) {
+      clock_intercept_nodes : clk1_p;
+    }
+    Controller(clk2) {
+      clock_intercept_nodes : clk2_p;
+    }
+    Controller(clk3) {
+      clock_intercept_nodes : clk3_p;
+    }
+    Controller(clk4) {
+      clock_intercept_nodes : clk4_p;
+    }
+    Controller(ramclk_p) {
+      clock_intercept_nodes : ramclk_p;
+    }
+  }
+}
+//  command: # The edt_clock and edt_update signals are automatically connected to EDT instances
+//  command: # The EDT controller is built with Bypass
+//  command: # Modify the below specification for your specific design requirements
+//  command: # The propery connect_bscan_segments_to_lsb_chains defaults to auto and connects the divided boundary scan segments from the previous pass to EDT
+//  command: read_config_data -in $spec -from_string {
+   EDT {
+     ijtag_host_interface : Sib(edt);
+       Controller (c1) {
+         longest_chain_range : 65, 100;
+         scan_chain_count : 85;
+         input_channel_count : 3;
+         output_channel_count : 3;
+          Connections +{
+            EdtChannelsIn(1) {
+            }
+            EdtChannelsIn(2) {
+            }
+            EdtChannelsIn(3) {
+            }
+            EdtChannelsOut(1) {
+            }
+            EdtChannelsOut(2) {
+            }
+            EdtChannelsOut(3) {
+            }
+          }
+       }
+    }
+    LogicBist {
+    ijtag_host_interface: Sib(lbist);
+    Controller(c1) {
+      burn_in : on ;
+      pre_post_shift_dead_cycles : 8 ;
+      ShiftCycles {  max: 40; }
+      CaptureCycles { max: 4; }
+      PatternCount { max: 10000; hardware_default : 1024 ; }
+      WarmupPatternCount { max : 512;} 
+      Connections {
+        shift_clock_src: clk1;
+        }
+      }
+    NcpIndexDecoder{
+      Ncp(clk1_occ_ncp) {
+        cycle(0): OCC(clk1);
+        cycle(1): OCC(clk1);
+      }
+      Ncp(clk2_occ_ncp) {
+        cycle(0): OCC(clk2);
+        cycle(1): OCC(clk2);
+      }
+      Ncp(ALL_occ_ncp) {
+        cycle(0): OCC(clk1) , OCC(clk2), Occ(clk3), Occ(clk4), Occ(ramclk_p), cpu_top_rtl1_tessent_sib_sti_inst, Bscan_occ ; 
+      }
+         }
+    }  
+}
+//  command: # The EDT Channel In/Out pins which are equipped with auxiliary ports from the previous pass insertion need to be specified
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsIn(1) [get_single_name [get_auxiliary_pins portain_p[0] -direction input]]
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsIn(2) [get_single_name [get_auxiliary_pins portain_p[1] -direction input]]
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsIn(3) [get_single_name [get_auxiliary_pins portain_p[2] -direction input]]
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsOut(1) [get_single_name [get_auxiliary_pins portbout_p[0] -direction output] ]
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsOut(2) [get_single_name [get_auxiliary_pins portbout_p[1] -direction output] ]
+//  command: set_config_value port_pin_name  -in $spec/EDT/Controller(c1)/Connections/EdtChannelsOut(3) [get_single_name [get_auxiliary_pins portbout_p[2] -direction output] ]
+//  command: report_config_data $spec
+
+DftSpecification(cpu_top,rtl2) {
+  IjtagNetwork {
+    HostScanInterface(sti_client) {
+      Interface {
+        design_instance : cpu_top_rtl1_tessent_sib_sti_inst;
+        scan_interface : client;
+      }
+      Sib(sri) {
+        Attributes {
+          tessent_dft_function : scan_resource_instrument_host;
+        }
+        Sib(sri_ctrl) {
+          Tdr(sri_ctrl) {
+            Attributes {
+              tessent_dft_function : scan_resource_instrument_dft_control;
+            }
+          }
+        }
+        Sib(occ) {
+        }
+        Sib(edt) {
+        }
+        Sib(lbist) {
+        }
+      }
+    }
+  }
+  OCC {
+    ijtag_host_interface : Sib(occ);
+    Controller(clk1) {
+      clock_intercept_nodes : clk1_p;
+    }
+    Controller(clk2) {
+      clock_intercept_nodes : clk2_p;
+    }
+    Controller(clk3) {
+      clock_intercept_nodes : clk3_p;
+    }
+    Controller(clk4) {
+      clock_intercept_nodes : clk4_p;
+    }
+    Controller(ramclk_p) {
+      clock_intercept_nodes : ramclk_p;
+    }
+  }
+  EDT {
+    ijtag_host_interface : Sib(edt);
+    Controller(c1) {
+      longest_chain_range : 65, 100;
+      scan_chain_count : 85;
+      input_channel_count : 3;
+      output_channel_count : 3;
+      Connections +{
+        EdtChannelsIn(1) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portain_p_0_AuxIn;
+        }
+        EdtChannelsIn(2) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portain_p_1_AuxIn;
+        }
+        EdtChannelsIn(3) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portain_p_2_AuxIn;
+        }
+        EdtChannelsOut(1) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portbout_p_0_AuxOut;
+        }
+        EdtChannelsOut(2) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portbout_p_1_AuxOut;
+        }
+        EdtChannelsOut(3) {
+          port_pin_name : cpu_top_rtl1_tessent_bscan_logical_group_DEF_inst/portbout_p_2_AuxOut;
+        }
+      }
+    }
+  }
+  LogicBist {
+    ijtag_host_interface : Sib(lbist);
+    Controller(c1) {
+      burn_in : on;
+      pre_post_shift_dead_cycles : 8;
+      ShiftCycles {
+        max : 40;
+      }
+      CaptureCycles {
+        max : 4;
+      }
+      PatternCount {
+        max : 10000;
+        hardware_default : 1024;
+      }
+      WarmupPatternCount {
+        max : 512;
+      }
+      Connections {
+        shift_clock_src : clk1;
+      }
+    }
+    NcpIndexDecoder {
+      Ncp(clk1_occ_ncp) {
+        cycle(0) : OCC(clk1);
+        cycle(1) : OCC(clk1);
+      }
+      Ncp(clk2_occ_ncp) {
+        cycle(0) : OCC(clk2);
+        cycle(1) : OCC(clk2);
+      }
+      Ncp(ALL_occ_ncp) {
+        cycle(0) : OCC(clk1), OCC(clk2), Occ(clk3), Occ(clk4), Occ(ramclk_p), cpu_top_rtl1_tessent_sib_sti_inst, Bscan_occ;
+      }
+    }
+  }
+}
+//  command: #display_spec
+//  command: # Generate and insert the hardware
+//  command: process_dft_specification 
+//  
+//  Begin processing of /DftSpecification(cpu_top,rtl2)
+//    --- IP generation phase ---
+//    Validation of IjtagNetwork
+//    Validation of OCC
+//    Validation of EDT
+//    Validation of LogicBist
+//  Warning: /DftSpecification(cpu_top,rtl2)/LogicBist
+//           The following dft signal does not exist, corresponding functionality will not be available in LBIST mode:
+//               mcp_bounding_en
+//    Processing of IjtagNetwork
+//      Generating design files for IJTAG SIB module cpu_top_rtl2_tessent_sib_1
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_sib_1.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_sib_1.icl
+//      Generating design files for IJTAG SIB module cpu_top_rtl2_tessent_sib_2
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_sib_2.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_sib_2.icl
+//      Generating design files for IJTAG Tdr module cpu_top_rtl2_tessent_tdr_sri_ctrl
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_tdr_sri_ctrl.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_ijtag.instrument/cpu_top_rtl2_tessent_tdr_sri_ctrl.icl
+//
+//      Loading the generated RTL verilog files (3) to enable instantiating the contained modules
+//      into the design.
+//    Processing of OCC
+//      Generating design files for OCC module cpu_top_rtl2_tessent_occ
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.icl
+//        IJTAG PDL   : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.pdl
+//        TCD         : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.tcd
+//        TCD Scan    : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.tcd_scan
+//        CTL         : ../tsdb_outdir/instruments/cpu_top_rtl2_occ.instrument/cpu_top_rtl2_tessent_occ.ctl
+//
+//      Loading the generated RTL verilog files (1) to enable instantiating the contained modules
+//      into the design.
+//    Processing of EDT
+//      Generating design files for EDT Tdr module cpu_top_rtl2_tessent_edt_lbist_c1_tdr
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1_tdr.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1_tdr.icl
+//      Generating design files for EDT module cpu_top_rtl2_tessent_edt_lbist_c1
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1.icl
+//        IJTAG PDL   : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1.pdl
+//        TCD         : ../tsdb_outdir/instruments/cpu_top_rtl2_edt_lbist.instrument/cpu_top_rtl2_tessent_edt_lbist_c1.tcd
+//
+//      Loading the generated RTL verilog files (2) to enable instantiating the contained modules
+//      into the design.
+//    Processing of LogicBist
+//      Generating design files for LBIST NCP index decoder module cpu_top_rtl2_tessent_lbist_ncp_index_decoder
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist_ncp_index_decoder.instrument/cpu_top_rtl2_tessent_lbist_ncp_index_decoder.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist_ncp_index_decoder.instrument/cpu_top_rtl2_tessent_lbist_ncp_index_decoder.icl
+//        TCD         : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist_ncp_index_decoder.instrument/cpu_top_rtl2_tessent_lbist_ncp_index_decoder.tcd
+//
+//      Loading the generated RTL verilog files (1) to enable instantiating the contained modules
+//      into the design.
+//      Generating design files for LBIST module cpu_top_rtl2_tessent_lbist
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_lbist.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_lbist.icl
+//        IJTAG PDL   : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_lbist.pdl
+//        TCD         : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_lbist.tcd
+//      Generating design files for LBIST module cpu_top_rtl2_tessent_single_chain_mode_logic
+//        Verilog RTL : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_single_chain_mode_logic.v
+//        IJTAG ICL   : ../tsdb_outdir/instruments/cpu_top_rtl2_lbist.instrument/cpu_top_rtl2_tessent_single_chain_mode_logic.icl
+//
+//      Loading the generated RTL verilog files (2) to enable instantiating the contained modules
+//      into the design.
+//    --- Instrument insertion phase ---
+//   Inserting instruments of type 'ijtag'
+//   Inserting instruments of type 'occ'
+//   Inserting instruments of type 'edt'
+//   Inserting instruments of type 'logic_bist'
+//   Inserting instruments of type 'logic_bist'
+//  
+//    Writing out modified source design in ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design
+//    Writing out specification in ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_spec
+//  
+//  Done  processing of DftSpecification(cpu_top,rtl2)
+//  
+//  command: # Extract IJAG network and create ICL file for the design
+//  command: extract_icl 
+//  Note: Updating the hierarchical data model to reflect RTL design changes.
+//  Writing design source dictionary : ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/cpu_top.design_source_dictionary
+//  ---------------------------------------------------------------------------
+//  Begin RTL synthesis.
+//  --------------------
+//  Synthesized modules=2, Time=1.00 sec.
+//  Synthesized modules=4, Time=1.00 sec.
+//  Synthesized modules=5, Time=1.00 sec.
+//  Synthesized modules=11, Time=1.00 sec.
+//  Synthesized modules=3, Time=1.00 sec.
+//  Synthesized modules=2, Time=1.00 sec.
+//  Note: There were 27 modules selectively synthesized. There were also 8 sub-modules created by synthesis.
+//        Use 'get_module -filter is_synthesized' to see them.
+//        You can also use 'set_quick_synthesis_options -verbose on' to have the synthesis step report the
+//        synthesized module names in the transcript as they are being synthesized.
+//  ---------------------------------------------------------------------------
+//  Warning: Total number of loops broken = 1
+//  Warning: Rule FN1 violation occurs 7816 times
+//  Warning: Rule FN4 violation occurs 81 times
+//  Warning: Rule FP13 violation occurs 14 times
+//  Flattening process completed, cell instances=11734, gates=18561, PIs=39+1(pseudo port), POs=88, CPU time=0.12 sec.
+//  ---------------------------------------------------------------------------
+//  Begin circuit learning analyses.
+//  --------------------------------
+//  Learning completed, CPU time=0.02 sec.
+//  ---------------------------------------------------------------------------
+//  Begin ICL extraction.
+//  ---------------------
+//  ICL extraction completed, ICL instances=84, CPU time=0.21 sec.
+//  ---------------------------------------------------------------------------
+//  ---------------------------------------------------------------------------
+//  Begin ICL elaboration and checking.
+//  -----------------------------------
+//  ICL elaboration completed, CPU time=0.08 sec.
+//  ---------------------------------------------------------------------------
+//  Writing ICL file : ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/cpu_top.icl
+//  Writing consolidated PDL file: ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/cpu_top.pdl
+//  Extracting SDC...
+//  Writing SDC file: ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/cpu_top.sdc
+//  Writing DFT info dictionary: ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/cpu_top.dft_info_dictionary
+//  Writing IJTAG graybox files in directory: ../tsdb_outdir/dft_inserted_designs/cpu_top_rtl2.dft_inserted_design/ijtag_graybox
+//  command: # Creates a Synthesis script of ALL the RTL (orignial and newly-created) to be used in DC Shell in next Step
+//  command: write_design_import_script -use_relative_path_to . for_dc_synthesis_edt_occ_lbist.tcl -replace
+//  Writing file 'for_dc_synthesis_edt_occ_lbist.tcl'.
+//  command: # Generate patterns to verify the inserted DFT logic
+//  command: create_patterns_specification 
+//  Creating '/PatternsSpecification(cpu_top,rtl2,signoff)'
+//    Getting patterns specifications for the 'ijtag' instrument type
+//    Getting patterns specifications for the 'jtag_bscan' instrument type
+//    Getting patterns specifications for the 'logic_bist' instrument type
+//  Warning: It is required that the instrument data exist inside a directory structure that
+//           follows the TSDB specification. One of the following directories does not exist for the
+//           instrument 'cpu_top_rtl2_tessent_lbist' within the core 'cpu_top':
+//             '../tsdb_outdir/logic_test_cores/cpu_top_rtl2.logic_test_core'
+//             '../tsdb_outdir/logic_test_cores/cpu_top.logic_test_core'
+//           Make sure that the fault simulation has been run and that the correct design identifier is set.
+//           This instrument will not be added to the pattern specification.
+//    Getting patterns specifications for the 'memory_bist' instrument type
+//  command: process_patterns_specification 
+//  
+//  Begin processing of /PatternsSpecification(cpu_top,rtl2,signoff)
+//  
+//    Processing of /PatternsSpecification(cpu_top,rtl2,signoff)/Patterns(ICLNetwork)
+//  
+//      Creation of pattern 'ICLNetwork'
+//        Solving ICLNetworkVerify(cpu_top)
+//  
+//      Writing pattern file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_signoff/ICLNetwork.sv'
+//  
+//    Processing of /PatternsSpecification(cpu_top,rtl2,signoff)/Patterns(JtagBscanPatterns)
+//      Processing of TestStep(JtagBscanTestStep) instrument 'jtag_bscan'
+//  
+//      Creation of pattern 'JtagBscanPatterns'
+//        Solving TestStep(JtagBscanTestStep)
+//  
+//      Writing pattern file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_signoff/JtagBscanPatterns.sv'
+//  
+//    Processing of /PatternsSpecification(cpu_top,rtl2,signoff)/Patterns(MemoryBist_P1)
+//      Processing of TestStep(go_nogo) instrument 'memory_bist'
+//  
+//      Creation of pattern 'MemoryBist_P1'
+//        Solving TestStep(go_nogo)
+//  
+//      Writing pattern file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_signoff/MemoryBist_P1.sv'
+//  
+//    Processing of /PatternsSpecification(cpu_top,rtl2,signoff)/Patterns(MemoryBist_ParallelRetentionTest_P1)
+//      Processing of TestStep(ParallelRetentionTest) instrument 'memory_bist'
+//  
+//      Creation of pattern 'MemoryBist_ParallelRetentionTest_P1'
+//        Solving TestStep(ParallelRetentionTest)
+//  
+//      Writing pattern file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_signoff/MemoryBist_ParallelRetentionTest_P1.sv'
+//      Writing simulation data dictionary file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_signoff/simulation.data_dictionary'
+//  
+//  Done  processing of /PatternsSpecification(cpu_top,rtl2,signoff)
+//  
+//  Writing configuration data file '../tsdb_outdir/patterns/cpu_top_rtl2.patterns_spec_signoff'.
+//  command: # Point to the libraries and run the simulation 
+//  command: set_simulation_library_sources -v ../library/standard_cells/verilog/adk.v -v ../library/memories/picdram.v
+//  command: run_testbench_simulations 
+Starting 4 simulations for ./simulation_outdir/cpu_top_rtl2.simulation_signoff
+//  Waiting for the simulation(s) to complete
+
+unscheduled 0 queued 0 running 0 pass 4 fail 0
+//  command: # If simulation fails, use this command to see which pattern failed
+//  command: #check_testbench_simulations
+//  command: exit 
